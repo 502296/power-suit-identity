@@ -1,47 +1,86 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Power Suit Identity</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Power Suit Identity</title>
+  <meta name="description" content="A private styling intelligence report for the modern gentleman." />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<header class="hero">
-    <div class="overlay"></div>
+  <main class="hero" role="main">
+    <div class="hero__overlay"></div>
 
-    <div class="hero-content">
-        <h1>Power Suit Identity</h1>
-        <p class="tagline">
-            A private styling intelligence report for the modern gentleman.
-        </p>
+    <div class="hero__content">
+      <div class="brand">
+        <img class="brand__mark" src="assets/logo-jacket.png" alt="Power Suit Identity logo" />
+        <h1 class="brand__name">Power Suit Identity</h1>
+      </div>
 
-        <a href="mailto:contact@tailorme.me?subject=Power Suit Identity Report Request" class="cta">
-            Request Your Report
-        </a>
+      <p class="hero__tagline">Refining the Architecture of Masculine Presence</p>
+
+      <a class="btn" href="#request">Request Your Report</a>
+
+      <div class="hero__features">
+        <div class="feature">
+          <div class="feature__title">Tailored Analysis</div>
+          <div class="feature__text">Built around your body, lifestyle, and intent.</div>
+        </div>
+        <div class="feature">
+          <div class="feature__title">Personalized Guidance</div>
+          <div class="feature__text">Clear suit, shirt, shoe, and accessory direction.</div>
+        </div>
+        <div class="feature">
+          <div class="feature__title">Elevated Style Dossier</div>
+          <div class="feature__text">A refined report you can reuse for years.</div>
+        </div>
+      </div>
     </div>
-</header>
+  </main>
 
-<section class="about">
-    <div class="container">
-        <h2>What Is It?</h2>
-        <p>
-            Power Suit Identity is a tailored style intelligence report designed 
-            to define your presence, refine your wardrobe, and elevate your authority.
-        </p>
+  <section id="request" class="section">
+    <div class="card">
+      <h2 class="card__title">Request Your Report</h2>
+      <p class="card__sub">Send your details and I’ll reply with next steps.</p>
 
-        <p>
-            From suit cuts and lapel styles to color psychology, shirt pairings,
-            footwear, accessories, and occasion-specific guidance —
-            every detail is built around your physique, complexion, and personal narrative.
-        </p>
+      <!-- خيار سريع: mailto (قد يفتح برنامج البريد عند العميل) -->
+      <form class="form" action="mailto:contact@tailorme.me" method="POST" enctype="text/plain">
+        <label>
+          Full Name
+          <input name="name" type="text" required />
+        </label>
+
+        <label>
+          Email
+          <input name="email" type="email" required />
+        </label>
+
+        <label>
+          City / State
+          <input name="location" type="text" />
+        </label>
+
+        <label>
+          Notes (occasion, goal, budget, etc.)
+          <textarea name="notes" rows="5"></textarea>
+        </label>
+
+        <button class="btn btn--solid" type="submit">Send Request</button>
+      </form>
+
+      <p class="card__fine">
+        Prefer email? Write directly to <strong>contact@tailorme.me</strong>
+      </p>
     </div>
-</section>
+  </section>
 
-<footer>
-    <p>© 2026 Power Suit Identity. All rights reserved.</p>
-</footer>
+  <footer class="footer">
+    <div>© <span id="y"></span> Power Suit Identity</div>
+  </footer>
 
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
