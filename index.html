@@ -4,83 +4,208 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Power Suit Identity</title>
-  <meta name="description" content="A private styling intelligence report for the modern gentleman." />
-  <link rel="stylesheet" href="style.css" />
+  <meta name="description" content="Power Suit Identity — a private identity report for masculine presence: suit colors, shirts, shoes, accessories, and fit guidance." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./style.css" />
 </head>
+
 <body>
-
-  <main class="hero" role="main">
-    <div class="hero__overlay"></div>
-
-    <div class="hero__content">
-      <div class="brand">
-        <img class="brand__mark" src="assets/logo-jacket.png" alt="Power Suit Identity logo" />
-        <h1 class="brand__name">Power Suit Identity</h1>
+  <!-- Top Bar -->
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand-mini">
+        <span class="brand-dot"></span>
+        <span class="brand-mini-text">Power Suit Identity</span>
       </div>
 
-      <p class="hero__tagline">Refining the Architecture of Masculine Presence</p>
-
-      <a class="btn" href="#request">Request Your Report</a>
-
-      <div class="hero__features">
-        <div class="feature">
-          <div class="feature__title">Tailored Analysis</div>
-          <div class="feature__text">Built around your body, lifestyle, and intent.</div>
-        </div>
-        <div class="feature">
-          <div class="feature__title">Personalized Guidance</div>
-          <div class="feature__text">Clear suit, shirt, shoe, and accessory direction.</div>
-        </div>
-        <div class="feature">
-          <div class="feature__title">Elevated Style Dossier</div>
-          <div class="feature__text">A refined report you can reuse for years.</div>
-        </div>
-      </div>
+      <nav class="nav">
+        <a href="#how">How it works</a>
+        <a href="#inside">What you get</a>
+        <a href="#start" class="nav-cta">Request</a>
+      </nav>
     </div>
-  </main>
+  </header>
 
-  <section id="request" class="section">
-    <div class="card">
-      <h2 class="card__title">Request Your Report</h2>
-      <p class="card__sub">Send your details and I’ll reply with next steps.</p>
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
 
-      <!-- خيار سريع: mailto (قد يفتح برنامج البريد عند العميل) -->
-      <form class="form" action="mailto:contact@tailorme.me" method="POST" enctype="text/plain">
-        <label>
-          Full Name
-          <input name="name" type="text" required />
-        </label>
+    <div class="container hero-content">
+      <div class="hero-logo-wrap">
+        <img src="./assets/logo-jacket.png" class="hero-logo" alt="Power Suit Identity logo" />
+      </div>
 
-        <label>
-          Email
-          <input name="email" type="email" required />
-        </label>
+      <h1 class="hero-title">Power Suit Identity</h1>
+      <p class="hero-subtitle">Refining the Architecture of Masculine Presence</p>
 
-        <label>
-          City / State
-          <input name="location" type="text" />
-        </label>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#start">Request Your Identity Report</a>
+        <a class="btn btn-ghost" href="#inside">See what’s inside</a>
+      </div>
 
-        <label>
-          Notes (occasion, goal, budget, etc.)
-          <textarea name="notes" rows="5"></textarea>
-        </label>
-
-        <button class="btn btn--solid" type="submit">Send Request</button>
-      </form>
-
-      <p class="card__fine">
-        Prefer email? Write directly to <strong>contact@tailorme.me</strong>
-      </p>
+      <div class="hero-pill">
+        <span class="pill-item">Calm</span>
+        <span class="pill-dot">•</span>
+        <span class="pill-item">Milan</span>
+        <span class="pill-dot">•</span>
+        <span class="pill-item">Structure</span>
+        <span class="pill-dot">•</span>
+        <span class="pill-item">Authority</span>
+      </div>
     </div>
   </section>
 
-  <footer class="footer">
-    <div>© <span id="y"></span> Power Suit Identity</div>
-  </footer>
+  <!-- 3 VALUE CARDS -->
+  <section class="section section-tight" id="inside">
+    <div class="container">
+      <div class="grid-3">
+        <div class="card">
+          <h3>Tailored Analysis</h3>
+          <p>Body proportions, skin tone harmony, lifestyle context — distilled into clear choices.</p>
+        </div>
 
-  <script>
-    document.getElementById("y").textContent = new Date().getFullYear();
-  </script>
+        <div class="card">
+          <h3>Personalized Guidance</h3>
+          <p>Suits, shirts, shoes, accessories — matched for work, weddings, events, and daily presence.</p>
+        </div>
+
+        <div class="card">
+          <h3>Elevated Style Dossier</h3>
+          <p>A private report you can reuse: colors, fits, fabrics, and a consistent identity system.</p>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Pricing line -->
+      <div class="pricing-line">
+        <div class="pricing-left">
+          <span class="price">$45</span>
+          <span class="price-note">Founders Rate — limited offer</span>
+        </div>
+        <a class="btn btn-primary" href="#start">Begin Your Transformation</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section" id="how">
+    <div class="container">
+      <h2 class="section-title">How it works</h2>
+      <p class="section-lead">
+        Simple process. Quiet confidence. Clear results.
+      </p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <h4>Send your details</h4>
+            <p>Your photos + basic info (height, weight, purpose). Use the form below.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <h4>We build your identity</h4>
+            <p>Suit architecture, color strategy, shirt choices, shoes, accessories, and fit guidance.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <h4>Receive your report</h4>
+            <p>Delivered by email. Clear, practical, and reusable for future purchases.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REQUEST FORM -->
+  <section class="section section-dark" id="start">
+    <div class="container">
+      <h2 class="section-title">Request Your Report</h2>
+      <p class="section-lead">
+        This is the intake. After submit, we’ll receive it at <b>contact@tailorme.me</b>.
+      </p>
+
+      <div class="form-card">
+        <!-- ✅ This uses "mailto" for now (works immediately). Later we can upgrade to real email API. -->
+        <form action="mailto:contact@tailorme.me" method="post" enctype="text/plain">
+          <div class="form-grid">
+            <div class="field">
+              <label>Full Name</label>
+              <input name="Full Name" type="text" placeholder="Your name" required>
+            </div>
+
+            <div class="field">
+              <label>Email</label>
+              <input name="Email" type="email" placeholder="you@example.com" required>
+            </div>
+
+            <div class="field">
+              <label>Phone (optional)</label>
+              <input name="Phone" type="text" placeholder="(502) ...">
+            </div>
+
+            <div class="field">
+              <label>Purpose</label>
+              <select name="Purpose" required>
+                <option value="" selected disabled>Select one</option>
+                <option>Work / Business</option>
+                <option>Wedding / Formal Event</option>
+                <option>Daily Presence</option>
+                <option>Interview</option>
+                <option>Other</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Height</label>
+              <input name="Height" type="text" placeholder="e.g., 5'11&quot; or 180 cm" required>
+            </div>
+
+            <div class="field">
+              <label>Weight</label>
+              <input name="Weight" type="text" placeholder="e.g., 185 lb or 84 kg" required>
+            </div>
+
+            <div class="field full">
+              <label>Notes (optional)</label>
+              <textarea name="Notes" rows="4" placeholder="Any preferences? Colors you hate? Shoes you already own?"></textarea>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Send Request</button>
+            <p class="fineprint">
+              Tip: after submit your email app will open to send the message. (We’ll upgrade this to a one-click submit next.)
+            </p>
+          </div>
+        </form>
+      </div>
+
+      <div class="footer-mini">
+        <div class="footer-left">
+          <span class="brand-mini-text">Power Suit Identity</span>
+          <span class="footer-dot">•</span>
+          <a href="mailto:contact@tailorme.me">contact@tailorme.me</a>
+        </div>
+        <div class="footer-right">
+          <span>Quiet. Precise. Confident.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </body>
 </html>
