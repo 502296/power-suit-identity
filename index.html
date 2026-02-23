@@ -9,7 +9,9 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <!-- Elegant script for brand (Brooks Brothers vibe) + clean sans -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="./style.css" />
 </head>
@@ -32,22 +34,21 @@
   </header>
 
   <!-- HERO -->
-  <section class="hero" id="top" aria-label="Hero">
-    <div class="hero-bg" role="img" aria-label="Hero background"></div>
+  <section class="hero" id="top">
+    <!-- ✅ Real image layer (better mobile cropping control) -->
+    <img class="hero-photo" src="./assets/hero-big.jpg" alt="" loading="eager" />
+
     <div class="hero-overlay"></div>
 
     <div class="container hero-content">
+      <!-- ✅ Logo (must be transparent PNG to look perfect) -->
       <div class="hero-logo-wrap">
-        <img
-          src="./assets/logo-jacket.png"
-          class="hero-logo"
-          alt="Power Suit Identity logo"
-          loading="eager"
-          decoding="async"
-        />
+        <img src="./assets/logo-jacket.png" class="hero-logo" alt="Power Suit Identity logo" />
       </div>
 
-      <h1 class="hero-title">Power Suit Identity</h1>
+      <!-- ✅ Brand name like Brooks Brothers vibe -->
+      <h1 class="hero-brand">Power Suit Identity</h1>
+
       <p class="hero-subtitle">Refining the Architecture of Masculine Presence</p>
 
       <div class="hero-actions">
@@ -208,6 +209,5 @@
       </div>
     </div>
   </section>
-
 </body>
 </html>
