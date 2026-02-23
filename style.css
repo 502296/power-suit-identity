@@ -168,9 +168,9 @@ img{ max-width: 100%; display:block; }
 
   position: relative;
 
-  min-height: 100svh; /* iPhone safe viewport */
+  min-height: 100svh;            /* iPhone safe */
 
-  padding-top: 70px; /* for fixed topbar */
+  padding-top: 70px;             /* for fixed topbar */
 
   display:flex;
 
@@ -178,67 +178,63 @@ img{ max-width: 100%; display:block; }
 
   overflow:hidden;
 
+  background: #000;              /* fallback */
+
 }
 
 
+
+/* ✅ Background image (lighter + shows furniture better) */
 
 .hero-bg{
 
   position:absolute; inset:0;
 
+  background-image: url("./assets/hero-big-bright.jpg");
 
+  background-repeat: no-repeat;
 
-  /* ✅ استخدم الخلفية الجديدة الأكثر إضاءة */
+  background-size: cover;
 
-  background: url("./assets/hero-big-bright.jpg") center/cover no-repeat;
+  background-position: center center;  /* desktop */
 
+  transform: scale(1.01);              /* أقل تكبير = قص أقل */
 
-
-  transform: scale(1.03);
-
-
-
-  /* ✅ إظهار التفاصيل (جلد/خشب) بدون ما تصير فاقعة */
-
-  filter: contrast(1.03) saturate(1.06) brightness(1.08);
+  filter: contrast(1.03) saturate(1.08) brightness(1.08);
 
 }
 
 
+
+/* ✅ Overlay: خففناه حتى ما يقتل الصورة */
 
 .hero-overlay{
 
   position:absolute; inset:0;
 
-
-
-  /* ✅ خففنا التغميق حتى ما تختفي التفاصيل على الموبايل */
-
   background:
 
-    radial-gradient(1200px 800px at 72% 50%,
+    radial-gradient(1000px 700px at 65% 40%,
 
       rgba(0,0,0,0.18) 0%,
 
-      rgba(0,0,0,0.42) 55%,
+      rgba(0,0,0,0.40) 55%,
 
-      rgba(0,0,0,0.58) 100%
-
-    ),
+      rgba(0,0,0,0.62) 100%),
 
     linear-gradient(to bottom,
 
       rgba(0,0,0,0.22) 0%,
 
-      rgba(0,0,0,0.52) 70%,
+      rgba(0,0,0,0.46) 55%,
 
-      rgba(0,0,0,0.62) 100%
-
-    );
+      rgba(0,0,0,0.62) 100%);
 
 }
 
 
+
+/* Content */
 
 .hero-content{
 
@@ -276,29 +272,25 @@ img{ max-width: 100%; display:block; }
 
 .hero-logo{
 
-  width: clamp(140px, 12vw, 210px); /* ✅ أكبر */
+  width: clamp(140px, 14vw, 210px); /* ✅ أكبر قليلاً على الديسكتوب */
 
   opacity: 0.98;
 
   background: transparent;
 
-
-
-  /* ✅ خليها نظيفة، بدون blend اللي أحياناً يخرب على الصور */
-
-  mix-blend-mode: normal;
-
-  filter: drop-shadow(0 0 18px rgba(255,255,255,0.20));
+  filter: drop-shadow(0 0 18px rgba(255,255,255,0.22));
 
 }
 
 
 
+/* الاسم (كما هو عندك — ما نغيّره) */
+
 .brand-script{
 
   font-family: var(--font-script);
 
-  font-size: clamp(44px, 6vw, 82px);
+  font-size: clamp(40px, 6vw, 78px);
 
   line-height: 1;
 
@@ -306,7 +298,7 @@ img{ max-width: 100%; display:block; }
 
   color: rgba(233,228,220,0.98);
 
-  text-shadow: 0 0 22px rgba(255,255,255,0.10);
+  text-shadow: 0 0 22px rgba(255,255,255,0.12);
 
   margin-top: 2px;
 
@@ -412,7 +404,7 @@ img{ max-width: 100%; display:block; }
 
   background: rgba(0,0,0,0.22);
 
-  box-shadow: 0 18px 45px rgba(0,0,0,0.35);
+  box-shadow: 0 18px 45px rgba(0,0,0,0.34);
 
 }
 
@@ -430,7 +422,7 @@ img{ max-width: 100%; display:block; }
 
 .btn-ghost{
 
-  color: rgba(233,228,220,0.88);
+  color: rgba(233,228,220,0.90);
 
   background: rgba(0,0,0,0.14);
 
@@ -844,36 +836,74 @@ textarea{ resize: vertical; }
 
 
 
-  .hero{ min-height: 100svh; }
+  /* ✅ Phone: show furniture + less crop */
 
-  .hero-content{ padding: 86px 0 54px; }
+  .hero{
+
+    min-height: 100svh;
+
+  }
+
+  .hero-bg{
+
+    background-position: 65% 60%; /* ✅ يطلع الكنبة/الخشب أكثر */
+
+    transform: scale(1.00);       /* ✅ لا تكبير = قص أقل */
+
+    filter: contrast(1.03) saturate(1.10) brightness(1.12);
+
+  }
+
+  .hero-content{
+
+    padding: 84px 0 56px;
+
+  }
 
 
 
-  /* ✅ ركّز على “الأثاث” أكثر بالموبايل */
+  /* ✅ Logo أكبر على التلفون */
 
-  .hero-bg{ background-position: 65% 55%; }
+  .hero-logo{
 
+    width: 190px;
 
+    filter: drop-shadow(0 0 20px rgba(255,255,255,0.26));
 
-  /* ✅ كبّر اللوغو على الهاتف */
-
-  .hero-logo{ width: 190px; }
-
-  .brand-script{ font-size: 54px; }
-
-}
+  }
 
 
 
-/* Extra small phones */
+  .brand-script{
 
-@media (max-width: 420px){
+    font-size: 56px;
 
-  .hero-bg{ background-position: 70% 58%; }
+  }
 
-  .hero-logo{ width: 200px; }
 
-  .brand-script{ font-size: 52px; }
+
+  /* overlay أخف على الموبايل حتى تبان الخلفية */
+
+  .hero-overlay{
+
+    background:
+
+      radial-gradient(900px 620px at 65% 45%,
+
+        rgba(0,0,0,0.14) 0%,
+
+        rgba(0,0,0,0.34) 55%,
+
+        rgba(0,0,0,0.54) 100%),
+
+      linear-gradient(to bottom,
+
+        rgba(0,0,0,0.14) 0%,
+
+        rgba(0,0,0,0.38) 60%,
+
+        rgba(0,0,0,0.56) 100%);
+
+  }
 
 }
