@@ -162,31 +162,35 @@ img{ max-width: 100%; display:block; }
 
 
 
+/* ✅ الخلفية: بدون فلتر يقتل الصورة */
+
 .hero-bg{
 
-  position:absolute; inset:0;
+  position:absolute;
 
-  /* ✅ IMPORTANT: use the real filename you have in assets */
+  inset:0;
 
-  background: url("./assets/hero-big.jpg") center/cover no-repeat;
+  background: url("./assets/hero-big.jpg") center center / cover no-repeat;
 
-  transform: scale(1.03);
-
-  filter: contrast(1.05) saturate(0.95) brightness(0.70);
+  transform: scale(1.02);
 
 }
 
 
 
+/* ✅ Overlay أخف حتى تبين الصورة */
+
 .hero-overlay{
 
-  position:absolute; inset:0;
+  position:absolute;
+
+  inset:0;
 
   background:
 
-    radial-gradient(1200px 800px at 70% 45%, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.72) 55%, rgba(0,0,0,0.92) 100%),
+    radial-gradient(1000px 600px at 60% 40%, rgba(0,0,0,0.22) 0%, rgba(0,0,0,0.52) 60%, rgba(0,0,0,0.78) 100%),
 
-    linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.78) 65%, rgba(0,0,0,0.95) 100%);
+    linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.58) 60%, rgba(0,0,0,0.82) 100%);
 
 }
 
@@ -200,13 +204,13 @@ img{ max-width: 100%; display:block; }
 
   text-align: center;
 
-  padding: 68px 0 50px;
+  padding: 58px 0 46px; /* ✅ قللنا الفراغ حتى كل شي يقرب */
 
 }
 
 
 
-/* ✅ logo closer + bigger */
+/* ✅ logo أكبر وأقرب */
 
 .hero-logo-wrap{
 
@@ -214,7 +218,7 @@ img{ max-width: 100%; display:block; }
 
   justify-content:center;
 
-  margin-bottom: 10px;
+  margin-bottom: 6px; /* كان كبير */
 
 }
 
@@ -222,11 +226,11 @@ img{ max-width: 100%; display:block; }
 
 .hero-logo{
 
-  width: clamp(110px, 10vw, 170px);
+  width: clamp(140px, 12vw, 190px); /* ✅ أكبر */
 
   opacity: 0.98;
 
-  /* subtle glow instead of ugly shadow */
+  /* ✅ glow بسيط بدون ظل قبيح */
 
   filter: drop-shadow(0 0 22px rgba(255,255,255,0.16));
 
@@ -236,7 +240,7 @@ img{ max-width: 100%; display:block; }
 
 .hero-title{
 
-  margin: 8px 0 10px;
+  margin: 6px 0 10px;
 
   font-family: var(--font-serif);
 
@@ -252,7 +256,7 @@ img{ max-width: 100%; display:block; }
 
 .hero-subtitle{
 
-  margin: 0 auto 26px;
+  margin: 0 auto 24px;
 
   max-width: 720px;
 
@@ -276,7 +280,7 @@ img{ max-width: 100%; display:block; }
 
   flex-wrap: wrap;
 
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 
 }
 
@@ -778,6 +782,12 @@ textarea{ resize: vertical; }
 
   .nav{ display:none; }
 
-  .hero-content{ padding-top: 76px; }
+
+
+  /* ✅ بالموبايل خلي العناصر أقرب وأوضح */
+
+  .hero-content{ padding-top: 68px; padding-bottom: 44px; }
+
+  .hero-logo{ width: 160px; }
 
 }
