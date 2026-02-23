@@ -32,14 +32,19 @@
   </header>
 
   <!-- HERO -->
-  <section class="hero" id="top">
-    <div class="hero-bg"></div>
+  <section class="hero" id="top" aria-label="Hero">
+    <div class="hero-bg" role="img" aria-label="Hero background"></div>
     <div class="hero-overlay"></div>
 
     <div class="container hero-content">
       <div class="hero-logo-wrap">
-        <!-- ✅ this must exist: /assets/logo-jacket.png -->
-        <img src="./assets/logo-jacket.png" class="hero-logo" alt="Power Suit Identity logo" />
+        <img
+          src="./assets/logo-jacket.png"
+          class="hero-logo"
+          alt="Power Suit Identity logo"
+          loading="eager"
+          decoding="async"
+        />
       </div>
 
       <h1 class="hero-title">Power Suit Identity</h1>
@@ -84,7 +89,6 @@
 
       <div class="divider"></div>
 
-      <!-- Pricing line -->
       <div class="pricing-line">
         <div class="pricing-left">
           <span class="price">$45</span>
@@ -99,9 +103,7 @@
   <section class="section" id="how">
     <div class="container">
       <h2 class="section-title">How it works</h2>
-      <p class="section-lead">
-        Simple process. Quiet confidence. Clear results.
-      </p>
+      <p class="section-lead">Simple process. Quiet confidence. Clear results.</p>
 
       <div class="steps">
         <div class="step">
