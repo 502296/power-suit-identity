@@ -2,108 +2,428 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Power Suit Identity — Private Style Report</title>
+  <meta name="description" content="Private style consulting. Get a personalized PDF report with complete suit recommendations — no physical items, just expert guidance." />
 
-  <title>Power Suit Identity</title>
-  <meta name="description" content="Power Suit Identity — a private identity report for masculine presence: suit colors, shirts, shoes, accessories, and fit guidance." />
-
-  <!-- Fonts -->
+  <!-- Fonts (optional) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@300;400;500&family=Great+Vibes&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="./style.css" />
+  <style>
+    :root{
+      --bg:#050607;
+      --bg2:#0b0c0e;
+      --text:#e9e4dc;
+      --muted:#bdb6ab;
+      --stroke:rgba(255,255,255,0.10);
+      --gold:#c8a96a;
+      --shadow:0 18px 60px rgba(0,0,0,0.55);
+
+      --radius:18px;
+      --radius2:26px;
+
+      --font-serif:"Playfair Display",serif;
+      --font-sans:"Inter",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      --font-script:"Great Vibes",cursive;
+    }
+
+    *{box-sizing:border-box;}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:var(--font-sans);}
+    a{color:inherit;text-decoration:none;}
+    img{max-width:100%;display:block;}
+
+    .container{width:min(1100px,92%);margin:0 auto;}
+    .sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+    /* Topbar */
+    .topbar{
+      position:fixed;top:0;left:0;right:0;z-index:50;
+      background:rgba(0,0,0,0.55);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--stroke);
+    }
+    .topbar-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 0;}
+    .brand-mini{display:flex;align-items:center;gap:10px;}
+    .brand-dot{width:10px;height:10px;border-radius:999px;background:var(--gold);box-shadow:0 0 18px rgba(200,169,106,0.35);}
+    .brand-mini-text{font-family:var(--font-serif);letter-spacing:1px;font-size:16px;}
+
+    .nav{display:flex;align-items:center;gap:18px;font-size:14px;color:var(--muted);}
+    .nav a:hover{color:var(--text);}
+    .nav-cta{padding:10px 14px;border:1px solid var(--stroke);border-radius:999px;}
+    .nav-cta:hover{border-color:rgba(200,169,106,0.55);color:var(--text);}
+
+    /* Hero */
+    .hero{
+      position:relative;
+      min-height:100svh;
+      padding-top:70px;
+      display:flex;
+      align-items:center;
+      overflow:hidden;
+      background:#000;
+    }
+    .hero-bg{
+      position:absolute;inset:0;
+      background-image:url("./assets/hero-big-bright.png");
+      background-repeat:no-repeat;
+      background-size:cover;
+      background-position:center center;
+      transform:scale(1.01);
+      filter:contrast(1.03) saturate(1.08) brightness(1.08);
+      background-color:#000;
+    }
+    .hero-overlay{
+      position:absolute;inset:0;
+      background:
+        radial-gradient(1000px 700px at 65% 40%,rgba(0,0,0,0.18) 0%,rgba(0,0,0,0.40) 55%,rgba(0,0,0,0.62) 100%),
+        linear-gradient(to bottom,rgba(0,0,0,0.22) 0%,rgba(0,0,0,0.46) 55%,rgba(0,0,0,0.62) 100%);
+    }
+    .hero-content{position:relative;z-index:2;text-align:center;padding:64px 0 54px;}
+    .hero-logo-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;margin-bottom:8px;}
+    .hero-logo{
+      width:clamp(140px,14vw,210px);
+      opacity:0.98;background:transparent;
+      filter:drop-shadow(0 0 18px rgba(255,255,255,0.22));
+    }
+    .brand-script{
+      font-family:var(--font-script);
+      font-size:clamp(40px,6vw,78px);
+      line-height:1;
+      letter-spacing:1px;
+      color:rgba(233,228,220,0.98);
+      text-shadow:0 0 22px rgba(255,255,255,0.12);
+      margin-top:2px;
+    }
+    .hero-subtitle{
+      margin:8px auto 18px;
+      max-width:820px;
+      font-weight:300;
+      font-size:clamp(16px,1.8vw,22px);
+      color:rgba(233,228,220,0.88);
+    }
+
+    .hero-actions{
+      display:flex;
+      justify-content:center;
+      gap:12px;
+      flex-wrap:wrap;
+      margin:12px 0 18px;
+    }
+
+    /* Buttons stacked (PC + mobile) as you requested */
+    .hero-actions.stack{
+      flex-direction:column;
+      align-items:center;
+      gap:12px;
+    }
+    .hero-actions.stack .btn{
+      width:min(420px,92%);
+    }
+
+    .hero-pill{
+      display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;
+      color:rgba(233,228,220,0.70);
+      font-size:13px;letter-spacing:1px;text-transform:uppercase;
+    }
+    .pill-dot{opacity:0.45;}
+
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      padding:14px 22px;border-radius:999px;font-size:14px;letter-spacing:0.6px;
+      transition:0.25s ease;border:1px solid var(--stroke);
+      background:transparent;cursor:pointer;
+    }
+    .btn-primary{
+      border-color:rgba(200,169,106,0.65);
+      color:var(--gold);
+      background:rgba(0,0,0,0.22);
+      box-shadow:0 18px 45px rgba(0,0,0,0.34);
+    }
+    .btn-primary:hover{
+      background:rgba(200,169,106,0.18);
+      border-color:rgba(200,169,106,0.95);
+      transform:translateY(-1px);
+    }
+    .btn-ghost{
+      color:rgba(233,228,220,0.90);
+      background:rgba(0,0,0,0.14);
+    }
+    .btn-ghost:hover{
+      color:var(--text);
+      border-color:rgba(255,255,255,0.25);
+      transform:translateY(-1px);
+    }
+
+    /* Sections */
+    .section{padding:74px 0;background:var(--bg);}
+    .section-tight{padding:50px 0 74px;}
+    .section-dark{
+      background:linear-gradient(to bottom,#060607 0%,#0b0c0e 100%);
+      border-top:1px solid var(--stroke);
+    }
+    .section-title{
+      font-family:var(--font-serif);
+      letter-spacing:2px;
+      font-weight:600;
+      margin:0 0 10px;
+      font-size:32px;
+    }
+    .section-lead{
+      margin:0 0 28px;
+      color:rgba(233,228,220,0.75);
+      font-weight:300;
+      max-width:860px;
+    }
+
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+    .card{
+      background:rgba(255,255,255,0.03);
+      border:1px solid var(--stroke);
+      border-radius:var(--radius);
+      padding:22px;
+      box-shadow:var(--shadow);
+    }
+    .card h3{font-family:var(--font-serif);letter-spacing:1px;margin:0 0 8px;}
+    .card p{margin:0;color:rgba(233,228,220,0.72);line-height:1.6;}
+
+    .divider{height:1px;background:var(--stroke);margin:32px 0;}
+
+    /* “See what's inside” image block */
+    .inside-wrap{
+      display:grid;
+      grid-template-columns:1.1fr 0.9fr;
+      gap:18px;
+      align-items:stretch;
+    }
+    .inside-media{
+      border-radius:var(--radius2);
+      overflow:hidden;
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,0.02);
+      box-shadow:var(--shadow);
+    }
+    .inside-media img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      filter:contrast(1.05) saturate(1.05) brightness(1.06);
+      transform:scale(1.01);
+    }
+    .inside-copy{
+      border-radius:var(--radius2);
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,0.03);
+      padding:22px;
+      box-shadow:var(--shadow);
+    }
+    .inside-copy h3{
+      margin:0 0 10px;
+      font-family:var(--font-serif);
+      letter-spacing:1px;
+      font-size:22px;
+    }
+    .inside-copy ul{margin:0;padding-left:18px;color:rgba(233,228,220,0.75);line-height:1.8;}
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;
+      font-size:12px;
+      letter-spacing:0.8px;
+      text-transform:uppercase;
+      color:rgba(233,228,220,0.72);
+      border:1px solid var(--stroke);
+      border-radius:999px;
+      padding:8px 12px;
+      background:rgba(0,0,0,0.18);
+    }
+    .badge strong{color:var(--gold);font-weight:600;}
+
+    /* How it works list */
+    .steps{display:grid;gap:14px;max-width:900px;}
+    .step{
+      display:flex;gap:14px;align-items:flex-start;
+      padding:18px;border:1px solid var(--stroke);
+      border-radius:var(--radius);
+      background:rgba(255,255,255,0.02);
+    }
+    .step-num{
+      width:34px;height:34px;border-radius:999px;
+      display:flex;align-items:center;justify-content:center;
+      border:1px solid rgba(200,169,106,0.55);
+      color:var(--gold);font-weight:600;
+      flex:0 0 auto;
+    }
+    .step-body h4{margin:0 0 6px;font-family:var(--font-serif);letter-spacing:1px;}
+    .step-body p{margin:0;color:rgba(233,228,220,0.72);line-height:1.6;}
+
+    /* Form */
+    .form-card{
+      border:1px solid var(--stroke);
+      border-radius:var(--radius2);
+      background:rgba(255,255,255,0.03);
+      padding:22px;
+      box-shadow:var(--shadow);
+      max-width:950px;
+    }
+    .form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+    .field{display:flex;flex-direction:column;gap:8px;}
+    .field.full{grid-column:1 / -1;}
+
+    label{font-size:13px;color:rgba(233,228,220,0.72);letter-spacing:0.4px;}
+    input,select,textarea{
+      background:rgba(0,0,0,0.35);
+      border:1px solid rgba(255,255,255,0.12);
+      color:var(--text);
+      border-radius:14px;
+      padding:12px 12px;
+      outline:none;
+      font-size:14px;
+      transition:0.2s ease;
+    }
+    input:focus,select:focus,textarea:focus{
+      border-color:rgba(200,169,106,0.75);
+      box-shadow:0 0 0 4px rgba(200,169,106,0.12);
+    }
+    textarea{resize:vertical;}
+
+    .form-actions{display:flex;flex-direction:column;gap:10px;margin-top:16px;}
+    .fineprint{margin:0;font-size:12px;color:rgba(233,228,220,0.55);}
+    .status{margin:0;font-size:13px;color:rgba(233,228,220,0.75);min-height:18px;}
+
+    /* Footer */
+    .footer-mini{
+      display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+      margin-top:26px;padding-top:18px;border-top:1px solid var(--stroke);
+      color:rgba(233,228,220,0.62);font-size:13px;
+    }
+    .footer-dot{opacity:0.4;margin:0 8px;}
+    .footer-mini a{color:rgba(200,169,106,0.9);}
+    .footer-mini a:hover{color:var(--gold);}
+
+    /* Responsive */
+    @media (max-width: 920px){
+      .grid-3{grid-template-columns:1fr;}
+      .form-grid{grid-template-columns:1fr;}
+      .nav{display:none;}
+
+      .inside-wrap{grid-template-columns:1fr;}
+      .hero{min-height:100svh;}
+      @supports (height: 100dvh){ .hero{min-height:100dvh;} }
+
+      .hero-bg{
+        background-size: cover;
+        background-position: center center;
+        transform: none;
+        filter: contrast(1.05) saturate(1.08) brightness(1.08);
+      }
+      .hero-overlay{
+        background:
+          radial-gradient(900px 620px at 60% 55%,
+          rgba(0,0,0,0.10) 0%,
+          rgba(0,0,0,0.30) 55%,
+          rgba(0,0,0,0.52) 100%),
+          linear-gradient(to bottom,
+          rgba(0,0,0,0.12) 0%,
+          rgba(0,0,0,0.34) 60%,
+          rgba(0,0,0,0.55) 100%);
+      }
+
+      .hero-content{padding:76px 0 44px;}
+      .hero-logo{width:170px;filter:drop-shadow(0 0 20px rgba(255,255,255,0.26));}
+      .brand-script{font-size:52px;}
+      .hero-subtitle{max-width:92%;margin:10px auto 18px;}
+      .btn{padding:13px 18px;font-size:14px;}
+    }
+  </style>
 </head>
 
 <body>
-  <!-- Top Bar -->
-  <header class="topbar">
+
+  <!-- Topbar -->
+  <div class="topbar">
     <div class="container topbar-inner">
       <div class="brand-mini">
-        <span class="brand-dot"></span>
+        <span class="brand-dot" aria-hidden="true"></span>
         <span class="brand-mini-text">Power Suit Identity</span>
       </div>
-
-      <nav class="nav">
-        <a href="#how">How it works</a>
-        <a href="#inside">What you get</a>
-        <a href="#start" class="nav-cta">Request</a>
+      <nav class="nav" aria-label="Main navigation">
+        <a href="#inside">See What’s Inside</a>
+        <a href="#how">How it Works</a>
+        <a class="nav-cta" href="#request">Request Your Report</a>
       </nav>
     </div>
-  </header>
+  </div>
 
-  <!-- HERO -->
+  <!-- Hero -->
   <section class="hero" id="top">
-    <div class="hero-bg"></div>
-    <div class="hero-overlay"></div>
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-overlay" aria-hidden="true"></div>
 
     <div class="container hero-content">
       <div class="hero-logo-wrap">
-        <!-- ✅ Logo (tries to look transparent on hero) -->
-        <img src="./assets/logo-jacket.png" class="hero-logo" alt="Power Suit Identity logo" />
-        <!-- ✅ Script brand name like Brooks Brothers style -->
-        <div class="brand-script" aria-hidden="true">Power Suit Identity</div>
-
-        <!-- SEO (hidden visually) -->
-        <h1 class="sr-only">Power Suit Identity</h1>
+        <!-- optional logo image -->
+        <!-- <img class="hero-logo" src="./assets/logo.png" alt="Power Suit Identity logo" /> -->
+        <div class="brand-script">Power Suit Identity</div>
       </div>
 
-      <p class="hero-subtitle">Refining the Architecture of Masculine Presence</p>
+      <p class="hero-subtitle">
+        Private style consulting — not a store. You’ll receive a personalized PDF report with 3 complete suit options,
+        including shirt, tie, shoes, and accessories — built by a men’s tailoring expert.
+      </p>
 
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="#start">Request Your Identity Report</a>
-        <a class="btn btn-ghost" href="#inside">See what’s inside</a>
+      <!-- Stacked buttons (PC + mobile) -->
+      <div class="hero-actions stack">
+        <a class="btn btn-primary" href="#request">Request Your Report</a>
+        <a class="btn btn-ghost" href="#inside">See What’s Inside</a>
+        <a class="btn btn-ghost" href="#how">How it Works</a>
       </div>
 
-      <div class="hero-pill">
-        <span class="pill-item">Calm</span>
-        <span class="pill-dot">•</span>
-        <span class="pill-item">Milan</span>
-        <span class="pill-dot">•</span>
-        <span class="pill-item">Structure</span>
-        <span class="pill-dot">•</span>
-        <span class="pill-item">Authority</span>
+      <div class="hero-pill" aria-label="Trust line">
+        <span>Expert-built</span><span class="pill-dot">•</span>
+        <span>Clear deliverables</span><span class="pill-dot">•</span>
+        <span>Practical results</span>
       </div>
     </div>
   </section>
 
-  <!-- 3 VALUE CARDS -->
-  <section class="section section-tight" id="inside">
+  <!-- Inside -->
+  <section class="section section-dark" id="inside">
     <div class="container">
-      <div class="grid-3">
-        <div class="card">
-          <h3>Tailored Analysis</h3>
-          <p>Body proportions, skin tone harmony, lifestyle context — distilled into clear choices.</p>
+      <h2 class="section-title">See What’s Inside</h2>
+      <p class="section-lead">
+        This is not generic AI advice. You’re hiring a men’s style consultant with 25+ years of tailoring experience.
+        You’ll get a clear, purchase-ready plan so you don’t waste money on a suit that doesn’t fit your body or your event.
+      </p>
+
+      <div class="inside-wrap">
+        <div class="inside-media">
+          <!-- ضع صورتك هنا -->
+          <img src="./assets/inside-preview.jpg" alt="Report preview image" loading="lazy" decoding="async">
         </div>
 
-        <div class="card">
-          <h3>Personalized Guidance</h3>
-          <p>Suits, shirts, shoes, accessories — matched for work, weddings, events, and daily presence.</p>
+        <div class="inside-copy">
+          <span class="badge"><strong>Deliverable</strong> PDF Style Report</span>
+          <h3>What you receive</h3>
+          <ul>
+            <li>3 complete suit recommendations (event-appropriate)</li>
+            <li>Shirt + tie + shoes + accessories for each look</li>
+            <li>Color strategy + fit guidance (body harmony)</li>
+            <li>Clear notes to take with you when shopping</li>
+            <li>No physical items shipped — consultation only</li>
+          </ul>
+          <div class="divider"></div>
+          <p style="margin:0;color:rgba(233,228,220,0.72);line-height:1.6;">
+            Our goal is to help you look incredible — confidently, practically, and without confusion.
+          </p>
         </div>
-
-        <div class="card">
-          <h3>Elevated Style Dossier</h3>
-          <p>A private report you can reuse: colors, fits, fabrics, and a consistent identity system.</p>
-        </div>
-      </div>
-
-      <div class="divider"></div>
-
-      <!-- Pricing line -->
-      <div class="pricing-line">
-        <div class="pricing-left">
-          <span class="price">$45</span>
-          <span class="price-note">Founders Rate — limited offer</span>
-        </div>
-        <a class="btn btn-primary" href="#start">Begin Your Transformation</a>
       </div>
     </div>
   </section>
 
-  <!-- HOW IT WORKS -->
+  <!-- How it works -->
   <section class="section" id="how">
     <div class="container">
-      <h2 class="section-title">How it works</h2>
+      <h2 class="section-title">How it Works</h2>
       <p class="section-lead">Simple process. Quiet confidence. Clear results.</p>
 
       <div class="steps">
@@ -111,64 +431,60 @@
           <div class="step-num">1</div>
           <div class="step-body">
             <h4>Send your details</h4>
-            <p>Your photos + basic info (height, weight, purpose). Use the form below.</p>
+            <p>Your basic info (height, weight, purpose) + notes. Use the form below.</p>
           </div>
         </div>
-
         <div class="step">
           <div class="step-num">2</div>
           <div class="step-body">
             <h4>We build your identity</h4>
-            <p>Suit architecture, color strategy, shirt choices, shoes, accessories, and fit guidance.</p>
+            <p>Suit architecture, color strategy, shirt choices, shoes, accessories — built for your event.</p>
           </div>
         </div>
-
         <div class="step">
           <div class="step-num">3</div>
           <div class="step-body">
             <h4>Receive your report</h4>
-            <p>Delivered by email. Clear, practical, and reusable for future purchases.</p>
+            <p>You’ll get a clean, practical PDF you can keep and use for future purchases.</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- REQUEST FORM -->
-  <section class="section section-dark" id="start">
+  <!-- Request -->
+  <section class="section section-dark" id="request">
     <div class="container">
       <h2 class="section-title">Request Your Report</h2>
       <p class="section-lead">
-        This is the intake. After submit, we’ll receive it at <b>contact@tailorme.me</b>.
+        After you submit, you’ll be redirected to secure payment (Stripe).
       </p>
 
       <div class="form-card">
-        <!-- ✅ Keep mailto for later upgrade (we prevent submit for payment redirect now) -->
-        <form id="reportForm" action="mailto:contact@tailorme.me" method="post" enctype="text/plain">
+        <form id="requestForm" novalidate>
           <div class="form-grid">
             <div class="field">
-              <label>Full Name</label>
-              <input name="Full Name" type="text" placeholder="Your name" required>
+              <label for="fullName">Full Name</label>
+              <input id="fullName" name="fullName" type="text" placeholder="Your name" required />
             </div>
 
             <div class="field">
-              <label>Email</label>
-              <input name="Email" type="email" placeholder="you@example.com" required>
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="you@example.com" required inputmode="email" autocomplete="email" />
             </div>
 
             <div class="field">
-              <label>Phone (optional)</label>
-              <input name="Phone" type="text" placeholder="(502) ...">
+              <label for="phone">Phone (optional)</label>
+              <input id="phone" name="phone" type="tel" placeholder="(502) ..." inputmode="tel" autocomplete="tel" />
             </div>
 
             <div class="field">
-              <label>Purpose</label>
-              <select name="Purpose" required>
-                <option value="" selected disabled>Select one</option>
-                <option>Work / Business</option>
+              <label for="purpose">Purpose</label>
+              <select id="purpose" name="purpose" required>
+                <option value="">Select one</option>
                 <option>Wedding / Formal Event</option>
-                <option>Daily Presence</option>
-                <option>Interview</option>
+                <option>Job Interview</option>
+                <option>Business / Work</option>
                 <option>Graduation</option>
                 <option>Prom</option>
                 <option>Other</option>
@@ -176,67 +492,120 @@
             </div>
 
             <div class="field">
-              <label>Height</label>
-              <input name="Height" type="text" placeholder="e.g., 5'11&quot; or 180 cm" required>
+              <label for="height">Height</label>
+              <input id="height" name="height" type="text" placeholder="e.g., 5'11&quot; or 180 cm" required />
             </div>
 
             <div class="field">
-              <label>Weight</label>
-              <input name="Weight" type="text" placeholder="e.g., 185 lb or 84 kg" required>
+              <label for="weight">Weight</label>
+              <input id="weight" name="weight" type="text" placeholder="e.g., 185 lb or 84 kg" required />
             </div>
 
             <div class="field full">
-              <label>Notes (optional)</label>
-              <textarea name="Notes" rows="4" placeholder="Any preferences? Colors you hate? Shoes you already own?"></textarea>
+              <label for="notes">Notes (optional)</label>
+              <textarea id="notes" name="notes" rows="4" placeholder="Any preferences? Colors you hate? Shoes you already own?"></textarea>
             </div>
           </div>
 
           <div class="form-actions">
-            <button class="btn btn-primary" type="submit">Send Request</button>
+            <button class="btn btn-primary" type="submit" id="submitBtn">Send Request → Pay</button>
+            <p class="status" id="status" role="status" aria-live="polite"></p>
             <p class="fineprint">
-              Tip: after submit you’ll continue to secure payment to complete your request.
+              Consultation only — no physical items shipped. Payment is handled securely by Stripe.
             </p>
           </div>
-        </form>
-      </div>
 
-      <div class="footer-mini">
-        <div class="footer-left">
-          <span class="brand-mini-text">Power Suit Identity</span>
-          <span class="footer-dot">•</span>
-          <a href="mailto:contact@tailorme.me">contact@tailorme.me</a>
-        </div>
-        <div class="footer-right">
-          <span>Quiet. Precise. Confident.</span>
-        </div>
+          <div class="footer-mini">
+            <span>© <span id="year"></span> Power Suit Identity</span>
+            <span><span class="footer-dot">•</span> Contact: <a href="mailto:contact@tailorme.me">contact@tailorme.me</a></span>
+          </div>
+        </form>
       </div>
     </div>
   </section>
 
-  <!-- ✅ Payment Redirect (Stripe Payment Link) -->
   <script>
-    // ✅ Your Stripe Payment Link (TEST)
-    const STRIPE_PAYMENT_LINK = "https://buy.stripe.com/test_00w28q55Z7by14wbb64Ni00";
+    // ==============================
+    // SETTINGS (EDIT THESE)
+    // ==============================
 
-    const form = document.getElementById("reportForm");
+    // ✅ Stripe payment link (test now, later replace with LIVE link)
+    const STRIPE_PAYMENT_URL = "https://buy.stripe.com/test_00w28q55Z7by14wbb64Ni00";
 
-    form.addEventListener("submit", function (e) {
+    // ✅ OPTIONAL: If later you create Google Sheets + Apps Script,
+    // put your Web App URL here. If empty, it will NOT try to send.
+    const WEB_APP_URL = ""; // e.g. "https://script.google.com/macros/s/XXXX/exec"
+
+    // ==============================
+    // Helpers
+    // ==============================
+    const $ = (s) => document.querySelector(s);
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const form = $("#requestForm");
+    const statusEl = $("#status");
+    const submitBtn = $("#submitBtn");
+
+    function showStatus(msg, ok=true){
+      statusEl.textContent = msg;
+      statusEl.style.color = ok ? "#c1ffd6" : "#ffb3b3";
+    }
+
+    function validEmail(v){
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v || "").trim());
+    }
+
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
+      showStatus("Processing…");
+      submitBtn.disabled = true;
 
-      // ✅ Minimal validation (do not break anything)
-      const fullName = form.querySelector('input[name="Full Name"]');
-      const email = form.querySelector('input[name="Email"]');
-      const height = form.querySelector('input[name="Height"]');
-      const weight = form.querySelector('input[name="Weight"]');
-      const purpose = form.querySelector('select[name="Purpose"]');
+      const payload = {
+        fullName: $("#fullName").value.trim(),
+        email: $("#email").value.trim(),
+        phone: $("#phone").value.trim(),
+        purpose: $("#purpose").value,
+        height: $("#height").value.trim(),
+        weight: $("#weight").value.trim(),
+        notes: $("#notes").value.trim(),
+        createdAt: new Date().toISOString()
+      };
 
-      if (!fullName.value.trim() || !email.value.trim() || !height.value.trim() || !weight.value.trim() || !purpose.value) {
-        alert("Please complete all required fields before proceeding to payment.");
+      // Validate required fields
+      const required = ["fullName","email","purpose","height","weight"];
+      for (const k of required){
+        if (!payload[k]){
+          showStatus("Please fill all required fields.", false);
+          submitBtn.disabled = false;
+          return;
+        }
+      }
+      if (!validEmail(payload.email)){
+        showStatus("Please enter a valid email.", false);
+        submitBtn.disabled = false;
         return;
       }
 
-      // ✅ Go to Stripe checkout
-      window.location.href = STRIPE_PAYMENT_LINK;
+      // ✅ Save locally (so we don't lose user input)
+      try {
+        localStorage.setItem("psi_request_payload", JSON.stringify(payload));
+      } catch {}
+
+      // ✅ If Web App URL exists -> send to Google Sheet
+      if (WEB_APP_URL && WEB_APP_URL.startsWith("http")) {
+        try {
+          await fetch(WEB_APP_URL, {
+            method: "POST",
+            headers: {"Content-Type":"application/json"},
+            body: JSON.stringify(payload)
+          });
+        } catch {
+          // Don’t block payment if sheet fails
+        }
+      }
+
+      // ✅ Redirect to Stripe payment
+      window.location.href = STRIPE_PAYMENT_URL;
     });
   </script>
 
