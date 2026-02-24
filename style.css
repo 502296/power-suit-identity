@@ -93,7 +93,7 @@ textarea{resize:vertical;}
 .hero-bg{
 background-size:cover;
 background-position:62% 62%; /* كادر متوازن (مو نازل قوي حتى ما يسوّي سواد فوق) */
-transform:scale(1.06); /* لازم > 1 حتى يمنع الفراغ الأسود */
+transform: scale(1.005); /* لازم > 1 حتى يمنع الفراغ الأسود */
 filter:contrast(1.08) saturate(1.10) brightness(1.12);
 }
 
