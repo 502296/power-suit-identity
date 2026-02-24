@@ -1,764 +1,1530 @@
 :root{
 
+
+
   --bg: #050607;
+
+
 
   --bg2:#0b0c0e;
 
+
+
   --text:#e9e4dc;
+
+
 
   --muted:#bdb6ab;
 
+
+
   --stroke: rgba(255,255,255,0.10);
 
+
+
   --gold:#c8a96a;
+
+
 
   --shadow: 0 18px 60px rgba(0,0,0,0.55);
 
 
 
+
+
+
+
   --radius: 18px;
+
+
 
   --radius2: 26px;
 
 
 
+
+
+
+
   --font-serif: "Playfair Display", serif;
+
+
 
   --font-sans: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 
+
+
   --font-script: "Great Vibes", cursive;
 
+
+
 }
+
+
+
+
 
 
 
 *{ box-sizing: border-box; }
 
+
+
 html, body{ margin:0; padding:0; background:var(--bg); color:var(--text); font-family: var(--font-sans); }
 
+
+
 a{ color: inherit; text-decoration: none; }
+
+
 
 img{ max-width: 100%; display:block; }
 
 
 
+
+
+
+
 .container{
+
+
 
   width: min(1100px, 92%);
 
+
+
   margin: 0 auto;
 
+
+
 }
+
+
+
+
 
 
 
 /* Accessible hide */
 
+
+
 .sr-only{
+
+
 
   position:absolute !important;
 
+
+
   width:1px; height:1px;
+
+
 
   padding:0; margin:-1px;
 
+
+
   overflow:hidden; clip:rect(0,0,0,0);
+
+
 
   white-space:nowrap; border:0;
 
+
+
 }
+
+
+
+
 
 
 
 /* Topbar */
 
+
+
 .topbar{
+
+
 
   position: fixed;
 
+
+
   top:0; left:0; right:0;
+
+
 
   z-index: 50;
 
+
+
   background: rgba(0,0,0,0.55);
+
+
 
   backdrop-filter: blur(10px);
 
+
+
   border-bottom: 1px solid var(--stroke);
 
+
+
 }
+
+
 
 .topbar-inner{
 
+
+
   display:flex;
 
+
+
   align-items:center;
+
+
 
   justify-content: space-between;
 
+
+
   padding: 14px 0;
 
+
+
 }
+
+
 
 .brand-mini{
 
+
+
   display:flex;
+
+
 
   align-items:center;
 
+
+
   gap:10px;
 
+
+
 }
+
+
 
 .brand-dot{
 
+
+
   width:10px; height:10px; border-radius:999px;
+
+
 
   background: var(--gold);
 
+
+
   box-shadow: 0 0 18px rgba(200,169,106,0.35);
 
+
+
 }
+
+
 
 .brand-mini-text{
 
+
+
   font-family: var(--font-serif);
+
+
 
   letter-spacing: 1px;
 
+
+
   font-size: 16px;
 
+
+
 }
+
+
 
 .nav{
 
+
+
   display:flex; align-items:center; gap:18px;
+
+
 
   font-size: 14px;
 
+
+
   color: var(--muted);
 
+
+
 }
+
+
 
 .nav a:hover{ color: var(--text); }
 
+
+
 .nav-cta{
+
+
 
   padding: 10px 14px;
 
+
+
   border: 1px solid var(--stroke);
+
+
 
   border-radius: 999px;
 
+
+
 }
+
+
 
 .nav-cta:hover{
 
+
+
   border-color: rgba(200,169,106,0.55);
+
+
 
   color: var(--text);
 
+
+
 }
+
+
+
+
 
 
 
 /* Hero */
 
+
+
 .hero{
+
+
 
   position: relative;
 
+
+
   min-height: 100svh;            /* iPhone safe */
+
+
 
   padding-top: 70px;             /* for fixed topbar */
 
+
+
   display:flex;
+
+
 
   align-items:center;
 
+
+
   overflow:hidden;
+
+
 
   background: #000;              /* fallback */
 
+
+
 }
+
+
+
+
 
 
 
 /* ✅ Background image (lighter + shows furniture better) */
 
+
+
 .hero-bg{
+
+
 
   position:absolute; inset:0;
 
-  background-image: url("./assets/hero-big-bright.jpg");
+
+
+  /* ✅ FIX: png (you renamed it in GitHub) */
+
+  background-image: url("./assets/hero-big-bright.png");
+
+
 
   background-repeat: no-repeat;
 
+
+
   background-size: cover;
+
+
 
   background-position: center center;  /* desktop */
 
+
+
   transform: scale(1.01);              /* أقل تكبير = قص أقل */
+
+
 
   filter: contrast(1.03) saturate(1.08) brightness(1.08);
 
+
+
 }
+
+
+
+
 
 
 
 /* ✅ Overlay: خففناه حتى ما يقتل الصورة */
 
+
+
 .hero-overlay{
+
+
 
   position:absolute; inset:0;
 
+
+
   background:
+
+
 
     radial-gradient(1000px 700px at 65% 40%,
 
+
+
       rgba(0,0,0,0.18) 0%,
+
+
 
       rgba(0,0,0,0.40) 55%,
 
+
+
       rgba(0,0,0,0.62) 100%),
+
+
 
     linear-gradient(to bottom,
 
+
+
       rgba(0,0,0,0.22) 0%,
+
+
 
       rgba(0,0,0,0.46) 55%,
 
+
+
       rgba(0,0,0,0.62) 100%);
 
+
+
 }
+
+
+
+
 
 
 
 /* Content */
 
+
+
 .hero-content{
+
+
 
   position: relative;
 
+
+
   z-index: 2;
+
+
 
   text-align: center;
 
+
+
   padding: 64px 0 54px;
 
+
+
 }
+
+
+
+
 
 
 
 /* Logo + Script title */
 
+
+
 .hero-logo-wrap{
+
+
 
   display:flex;
 
+
+
   flex-direction: column;
+
+
 
   align-items:center;
 
+
+
   justify-content:center;
+
+
 
   gap: 10px;
 
+
+
   margin-bottom: 8px;
 
+
+
 }
+
+
+
+
 
 
 
 .hero-logo{
 
+
+
   width: clamp(140px, 14vw, 210px); /* ✅ أكبر قليلاً على الديسكتوب */
+
+
 
   opacity: 0.98;
 
+
+
   background: transparent;
+
+
 
   filter: drop-shadow(0 0 18px rgba(255,255,255,0.22));
 
+
+
 }
+
+
+
+
 
 
 
 /* الاسم (كما هو عندك — ما نغيّره) */
 
+
+
 .brand-script{
+
+
 
   font-family: var(--font-script);
 
+
+
   font-size: clamp(40px, 6vw, 78px);
+
+
 
   line-height: 1;
 
+
+
   letter-spacing: 1px;
+
+
 
   color: rgba(233,228,220,0.98);
 
+
+
   text-shadow: 0 0 22px rgba(255,255,255,0.12);
+
+
 
   margin-top: 2px;
 
+
+
 }
+
+
+
+
 
 
 
 .hero-subtitle{
 
+
+
   margin: 8px auto 26px;
+
+
 
   max-width: 760px;
 
+
+
   font-weight: 300;
+
+
 
   font-size: clamp(16px, 1.8vw, 22px);
 
+
+
   color: rgba(233,228,220,0.88);
 
+
+
 }
+
+
+
+
 
 
 
 .hero-actions{
 
+
+
   display:flex;
+
+
 
   justify-content:center;
 
+
+
   gap:12px;
+
+
 
   flex-wrap: wrap;
 
+
+
   margin-bottom: 18px;
 
+
+
 }
+
+
+
+
 
 
 
 .hero-pill{
 
+
+
   display:flex;
+
+
 
   align-items:center;
 
+
+
   justify-content:center;
+
+
 
   gap:10px;
 
+
+
   flex-wrap: wrap;
+
+
 
   color: rgba(233,228,220,0.70);
 
+
+
   font-size: 13px;
+
+
 
   letter-spacing: 1px;
 
+
+
   text-transform: uppercase;
 
+
+
 }
+
+
 
 .pill-dot{ opacity: 0.45; }
 
 
 
+
+
+
+
 /* Buttons */
+
+
 
 .btn{
 
+
+
   display:inline-flex;
+
+
 
   align-items:center;
 
+
+
   justify-content:center;
+
+
 
   gap:10px;
 
+
+
   padding: 14px 22px;
+
+
 
   border-radius: 999px;
 
+
+
   font-size: 14px;
+
+
 
   letter-spacing: 0.6px;
 
+
+
   transition: 0.25s ease;
+
+
 
   border: 1px solid var(--stroke);
 
+
+
   background: transparent;
+
+
 
   cursor: pointer;
 
+
+
 }
+
+
+
+
 
 
 
 .btn-primary{
 
+
+
   border-color: rgba(200,169,106,0.65);
+
+
 
   color: var(--gold);
 
+
+
   background: rgba(0,0,0,0.22);
+
+
 
   box-shadow: 0 18px 45px rgba(0,0,0,0.34);
 
+
+
 }
+
+
 
 .btn-primary:hover{
 
+
+
   background: rgba(200,169,106,0.18);
+
+
 
   border-color: rgba(200,169,106,0.95);
 
+
+
   transform: translateY(-1px);
 
+
+
 }
+
+
+
+
 
 
 
 .btn-ghost{
 
+
+
   color: rgba(233,228,220,0.90);
+
+
 
   background: rgba(0,0,0,0.14);
 
+
+
 }
+
+
 
 .btn-ghost:hover{
 
+
+
   color: var(--text);
+
+
 
   border-color: rgba(255,255,255,0.25);
 
+
+
   transform: translateY(-1px);
 
+
+
 }
+
+
+
+
 
 
 
 /* Sections */
 
+
+
 .section{
+
+
 
   padding: 74px 0;
 
+
+
   background: var(--bg);
 
+
+
 }
+
+
 
 .section-tight{
 
+
+
   padding: 50px 0 74px;
 
+
+
 }
+
+
+
+
 
 
 
 .section-dark{
 
+
+
   background: linear-gradient(to bottom, #060607 0%, #0b0c0e 100%);
+
+
 
   border-top: 1px solid var(--stroke);
 
+
+
 }
+
+
+
+
 
 
 
 .section-title{
 
+
+
   font-family: var(--font-serif);
+
+
 
   letter-spacing: 2px;
 
+
+
   font-weight: 600;
+
+
 
   margin: 0 0 10px;
 
+
+
   font-size: 32px;
 
+
+
 }
+
+
+
+
 
 
 
 .section-lead{
 
+
+
   margin: 0 0 28px;
+
+
 
   color: rgba(233,228,220,0.75);
 
+
+
   font-weight: 300;
+
+
 
   max-width: 760px;
 
+
+
 }
+
+
+
+
 
 
 
 /* Cards */
 
+
+
 .grid-3{
+
+
 
   display:grid;
 
+
+
   grid-template-columns: repeat(3, 1fr);
+
+
 
   gap: 16px;
 
+
+
 }
+
+
 
 .card{
 
+
+
   background: rgba(255,255,255,0.03);
+
+
 
   border: 1px solid var(--stroke);
 
+
+
   border-radius: var(--radius);
+
+
 
   padding: 22px;
 
+
+
   box-shadow: var(--shadow);
 
+
+
 }
+
+
 
 .card h3{
 
+
+
   font-family: var(--font-serif);
+
+
 
   letter-spacing: 1px;
 
+
+
   margin: 0 0 8px;
 
+
+
 }
+
+
 
 .card p{
 
+
+
   margin: 0;
+
+
 
   color: rgba(233,228,220,0.72);
 
+
+
   line-height: 1.6;
 
+
+
 }
+
+
+
+
 
 
 
 /* Divider */
 
+
+
 .divider{
+
+
 
   height: 1px;
 
+
+
   background: var(--stroke);
+
+
 
   margin: 32px 0;
 
+
+
 }
+
+
+
+
 
 
 
 /* Pricing line */
 
+
+
 .pricing-line{
 
+
+
   display:flex;
+
+
 
   align-items:center;
 
+
+
   justify-content: space-between;
+
+
 
   gap: 16px;
 
+
+
   flex-wrap: wrap;
 
+
+
 }
+
+
 
 .pricing-left{
 
+
+
   display:flex;
+
+
 
   align-items: baseline;
 
+
+
   gap: 12px;
 
+
+
 }
+
+
 
 .price{
 
+
+
   font-family: var(--font-serif);
+
+
 
   font-size: 30px;
 
+
+
   color: var(--gold);
+
+
 
   letter-spacing: 1px;
 
+
+
 }
+
+
 
 .price-note{
 
+
+
   color: rgba(233,228,220,0.65);
 
+
+
 }
+
+
+
+
 
 
 
 /* Steps */
 
+
+
 .steps{
+
+
 
   display:grid;
 
+
+
   gap: 14px;
+
+
 
   max-width: 850px;
 
+
+
 }
+
+
 
 .step{
 
+
+
   display:flex;
+
+
 
   gap: 14px;
 
+
+
   align-items:flex-start;
+
+
 
   padding: 18px;
 
+
+
   border: 1px solid var(--stroke);
+
+
 
   border-radius: var(--radius);
 
+
+
   background: rgba(255,255,255,0.02);
 
+
+
 }
+
+
 
 .step-num{
 
+
+
   width: 34px; height: 34px;
+
+
 
   border-radius: 999px;
 
+
+
   display:flex; align-items:center; justify-content:center;
+
+
 
   border: 1px solid rgba(200,169,106,0.55);
 
+
+
   color: var(--gold);
+
+
 
   font-weight: 600;
 
+
+
 }
+
+
 
 .step-body h4{
 
+
+
   margin: 0 0 6px;
+
+
 
   font-family: var(--font-serif);
 
+
+
   letter-spacing: 1px;
 
+
+
 }
+
+
 
 .step-body p{
 
+
+
   margin: 0;
+
+
 
   color: rgba(233,228,220,0.72);
 
+
+
   line-height: 1.6;
 
+
+
 }
+
+
+
+
 
 
 
 /* Form */
 
+
+
 .form-card{
+
+
 
   border: 1px solid var(--stroke);
 
+
+
   border-radius: var(--radius2);
+
+
 
   background: rgba(255,255,255,0.03);
 
+
+
   padding: 22px;
+
+
 
   box-shadow: var(--shadow);
 
+
+
   max-width: 900px;
 
+
+
 }
+
+
+
+
 
 
 
 .form-grid{
 
+
+
   display:grid;
+
+
 
   grid-template-columns: repeat(2, 1fr);
 
+
+
   gap: 14px;
 
+
+
 }
+
+
 
 .field{
 
+
+
   display:flex;
+
+
 
   flex-direction: column;
 
+
+
   gap: 8px;
 
+
+
 }
+
+
 
 .field.full{ grid-column: 1 / -1; }
 
 
 
+
+
+
+
 label{
+
+
 
   font-size: 13px;
 
+
+
   color: rgba(233,228,220,0.72);
+
+
 
   letter-spacing: 0.4px;
 
+
+
 }
+
+
+
+
 
 
 
 input, select, textarea{
 
+
+
   background: rgba(0,0,0,0.35);
+
+
 
   border: 1px solid rgba(255,255,255,0.12);
 
+
+
   color: var(--text);
+
+
 
   border-radius: 14px;
 
+
+
   padding: 12px 12px;
+
+
 
   outline: none;
 
+
+
   font-size: 14px;
+
+
 
   transition: 0.2s ease;
 
+
+
 }
+
+
+
+
 
 
 
 input:focus, select:focus, textarea:focus{
 
+
+
   border-color: rgba(200,169,106,0.75);
+
+
 
   box-shadow: 0 0 0 4px rgba(200,169,106,0.12);
 
+
+
 }
+
+
+
+
 
 
 
@@ -766,93 +1532,181 @@ textarea{ resize: vertical; }
 
 
 
+
+
+
+
 .form-actions{
+
+
 
   display:flex;
 
+
+
   flex-direction: column;
+
+
 
   gap: 10px;
 
+
+
   margin-top: 16px;
 
+
+
 }
+
+
+
+
 
 
 
 .fineprint{
 
+
+
   margin: 0;
+
+
 
   font-size: 12px;
 
+
+
   color: rgba(233,228,220,0.55);
 
+
+
 }
+
+
+
+
 
 
 
 /* Footer mini */
 
+
+
 .footer-mini{
+
+
 
   display:flex;
 
+
+
   justify-content: space-between;
+
+
 
   gap: 14px;
 
+
+
   flex-wrap: wrap;
+
+
 
   margin-top: 26px;
 
+
+
   padding-top: 18px;
+
+
 
   border-top: 1px solid var(--stroke);
 
+
+
   color: rgba(233,228,220,0.62);
+
+
 
   font-size: 13px;
 
+
+
 }
+
+
 
 .footer-dot{ opacity: 0.4; margin: 0 8px; }
 
+
+
 .footer-mini a{ color: rgba(200,169,106,0.9); }
+
+
 
 .footer-mini a:hover{ color: var(--gold); }
 
 
 
+
+
+
+
 /* Responsive */
+
+
 
 @media (max-width: 920px){
 
+
+
   .grid-3{ grid-template-columns: 1fr; }
 
+
+
   .form-grid{ grid-template-columns: 1fr; }
+
+
 
   .nav{ display:none; }
 
 
 
-  /* ✅ Phone: show furniture + less crop */
+
+
+
+
+  /* ✅ Phone: show furniture + less crop + better Safari behavior */
 
   .hero{
 
-    min-height: 100svh;
+    min-height: 100dvh; /* بدل 100svh: أكثر ثبات على iPhone */
 
   }
+
+
 
   .hero-bg{
 
-    background-position: 65% 60%; /* ✅ يطلع الكنبة/الخشب أكثر */
+    /* ✅ نوجّه الكادر باتجاه الكنبة/الخشب + ننزل الصورة قليلاً */
 
-    transform: scale(1.00);       /* ✅ لا تكبير = قص أقل */
+    background-position: 72% 78%;
 
-    filter: contrast(1.03) saturate(1.10) brightness(1.12);
+
+
+    /* ✅ نخفف القص بدون ما نسبب حدود سوداء */
+
+    transform: scale(1.00);
+
+
+
+    /* ✅ وضوح أكثر على الموبايل */
+
+    filter: contrast(1.05) saturate(1.10) brightness(1.14);
 
   }
+
+
 
   .hero-content{
 
@@ -862,47 +1716,71 @@ textarea{ resize: vertical; }
 
 
 
+
+
+
+
   /* ✅ Logo أكبر على التلفون */
+
+
 
   .hero-logo{
 
+
+
     width: 190px;
+
+
 
     filter: drop-shadow(0 0 20px rgba(255,255,255,0.26));
 
+
+
   }
+
+
+
+
 
 
 
   .brand-script{
 
+
+
     font-size: 56px;
+
+
 
   }
 
 
 
-  /* overlay أخف على الموبايل حتى تبان الخلفية */
+
+
+
+
+  /* ✅ overlay أخف على الموبايل حتى تبان التفاصيل */
 
   .hero-overlay{
 
     background:
 
-      radial-gradient(900px 620px at 65% 45%,
+      radial-gradient(900px 620px at 70% 55%,
 
-        rgba(0,0,0,0.14) 0%,
+        rgba(0,0,0,0.10) 0%,
 
-        rgba(0,0,0,0.34) 55%,
+        rgba(0,0,0,0.30) 55%,
 
-        rgba(0,0,0,0.54) 100%),
+        rgba(0,0,0,0.50) 100%),
 
       linear-gradient(to bottom,
 
-        rgba(0,0,0,0.14) 0%,
+        rgba(0,0,0,0.10) 0%,
 
-        rgba(0,0,0,0.38) 60%,
+        rgba(0,0,0,0.34) 60%,
 
-        rgba(0,0,0,0.56) 100%);
+        rgba(0,0,0,0.52) 100%);
 
   }
 
