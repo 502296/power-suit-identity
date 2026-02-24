@@ -91,10 +91,10 @@ textarea{resize:vertical;}
 
 /* ✅ الخلفية على الهاتف: أصغر + أوضح + بدون فراغ */
 .hero-bg{
-  background-size: cover;
-  background-position: 60% 60%;
-  transform: scale(1.003);
-  filter: contrast(1.05) saturate(1.10) brightness(1.10);
+  background-size: 120%;
+  background-position: center bottom;
+  transform: none;
+  filter: contrast(1.05) saturate(1.08) brightness(1.08);
 }
 
 /* ✅ خفّف overlay حتى تبين التفاصيل */
