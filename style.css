@@ -1687,18 +1687,11 @@ textarea{ resize: vertical; }
 
 
   .hero-bg{
-
-    /* ✅ نفس الصورة — فقط تصغير + وضوح أفضل على التلفون */
-
-    background-size: 115%;           /* يقلل التكبير اللي يسبب قص */
-
-    background-position: center 68%; /* ينزل الكادر شوي حتى تبان الكنبة */
-
-    transform: scale(0.94);          /* تصغير حقيقي بدون حدود سوداء */
-
-    filter: contrast(1.08) saturate(1.12) brightness(1.18);
-
-  }
+  background-size: cover;
+  background-position: 70% 75%;
+  transform: scale(1.03);   /* لازم أكبر من 1 */
+  filter: contrast(1.08) saturate(1.12) brightness(1.15);
+}
 
 
 
