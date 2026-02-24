@@ -122,3 +122,8 @@ rgba(0,0,0,0.55) 100%);
 .hero-actions{gap:10px;}
 .btn{padding:13px 18px;font-size:14px;}
 }
+@media (max-width: 920px){
+  .topbar{
+    background: rgba(255,0,0,0.35) !important;
+  }
+}
