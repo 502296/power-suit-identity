@@ -83,17 +83,16 @@ textarea{resize:vertical;}
 .form-grid{grid-template-columns:1fr;}
 .nav{display:none;}
 
-/* ✅ iPhone/Safari Fix */
+/* ✅ iPhone/Safari: ثبات ارتفاع الشاشة */
 .hero{min-height:100svh;}
 @supports (height: 100dvh){
 .hero{min-height:100dvh;}
 }
 
-/* ✅ تحسين ظهور الخلفية للموبايل */
+/* ✅ التعديل المطلوب: تغطية كاملة للشاشة بدون قص عشوائي */
 .hero-bg{
 background-size: cover;
-/* سحب الصورة لليسار قليلاً لتظهر البدلة بشكل أوضح في الشاشات الضيقة */
-background-position: 20% center;
+background-position: center center;
 transform: none;
 filter: contrast(1.05) saturate(1.08) brightness(1.08);
 }
