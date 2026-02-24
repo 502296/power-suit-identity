@@ -83,23 +83,20 @@ textarea{resize:vertical;}
 .form-grid{grid-template-columns:1fr;}
 .nav{display:none;}
 
-/* ✅ iPhone/Safari: ثبات ارتفاع الشاشة بدون فراغ أسود */
+/* ✅ iPhone/Safari: ثبات ارتفاع الشاشة */
 .hero{min-height:100svh;}
 @supports (height: 100dvh){
 .hero{min-height:100dvh;}
 }
 
-/* ✅ الخلفية على الهاتف: أصغر + أوضح + بدون فراغ */
-@media (max-width: 920px){
-  .hero-bg{
-    background-size: 115%;
-    background-position: center bottom;
-    transform: none;
-    filter: contrast(1.05) saturate(1.08) brightness(1.08);
-  }
+/* ✅ التعديل المطلوب: تغطية كاملة للشاشة بدون قص عشوائي */
+.hero-bg{
+background-size: cover;
+background-position: center center;
+transform: none;
+filter: contrast(1.05) saturate(1.08) brightness(1.08);
 }
 
-/* ✅ خفّف overlay حتى تبين التفاصيل */
 .hero-overlay{
 background:
 radial-gradient(900px 620px at 60% 55%,
@@ -112,18 +109,10 @@ rgba(0,0,0,0.34) 60%,
 rgba(0,0,0,0.55) 100%);
 }
 
-/* ✅ خلي المحتوى ما يكون “ضخم” على التلفون */
 .hero-content{padding:76px 0 44px;}
 .hero-logo{width:170px;filter:drop-shadow(0 0 20px rgba(255,255,255,0.26));}
 .brand-script{font-size:52px;}
 .hero-subtitle{max-width:92%;margin:10px auto 18px;}
-
-/* ✅ الأزرار أجمل على الموبايل */
 .hero-actions{gap:10px;}
 .btn{padding:13px 18px;font-size:14px;}
-}
-@media (max-width: 920px){
-  .topbar{
-    background: rgba(255,0,0,0.35) !important;
-  }
 }
