@@ -326,8 +326,8 @@
     // ==============================
     const STRIPE_PAYMENT_URL = "https://buy.stripe.com/test_00w28q55Z7by14wbb64Ni00";
 
-    // OPTIONAL: later add Google Sheets Web App URL here (leave empty for now)
-    const WEB_APP_URL = "";
+    // ✅ Google Sheets Web App URL (CONNECTED)
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxysi2JvYwLh3bG6zQ1yYusXmU9gAxBh1NItsEO8zcsg5ddUQQk9XyiBfuIJjLVyy6D/exec";
 
     const $ = (s) => document.querySelector(s);
     document.getElementById("year").textContent = new Date().getFullYear();
@@ -376,7 +376,7 @@
 
       try { localStorage.setItem("psi_request_payload", JSON.stringify(payload)); } catch {}
 
-      // If later you add Google Sheets, it will send (optional)
+      // ✅ Send to Google Sheets + Email via Apps Script
       if (WEB_APP_URL && WEB_APP_URL.startsWith("http")) {
         try {
           await fetch(WEB_APP_URL, {
@@ -384,7 +384,10 @@
             headers: {"Content-Type":"application/json"},
             body: JSON.stringify(payload)
           });
-        } catch {}
+        } catch (err) {
+          // We still redirect to Stripe even if Sheets fails (silent)
+          console.error("WEB_APP_URL error:", err);
+        }
       }
 
       // ✅ Redirect to Stripe
