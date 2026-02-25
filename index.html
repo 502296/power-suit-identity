@@ -171,7 +171,6 @@
         <h1 class="sr-only">Power Suit Identity</h1>
       </div>
 
-      <!-- ✅ ONLY CHANGE: old line removed + new luxe line added -->
       <p class="hero-subtitle">
         Refining the Architecture of Masculine Presence
       </p>
@@ -376,16 +375,16 @@
 
       try { localStorage.setItem("psi_request_payload", JSON.stringify(payload)); } catch {}
 
-      // ✅ Send to Google Sheets + Email via Apps Script
+      // ✅ Send to Google Sheets + Email via Apps Script (CORS-safe)
       if (WEB_APP_URL && WEB_APP_URL.startsWith("http")) {
         try {
           await fetch(WEB_APP_URL, {
             method: "POST",
-            headers: {"Content-Type":"application/json"},
+            mode: "no-cors",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
             body: JSON.stringify(payload)
           });
         } catch (err) {
-          // We still redirect to Stripe even if Sheets fails (silent)
           console.error("WEB_APP_URL error:", err);
         }
       }
