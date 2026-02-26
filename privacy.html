@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Privacy Policy — Power Suit Identity</title>
+  <meta name="description" content="Privacy Policy for Power Suit Identity." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#050607;--bg2:#0b0c0e;--text:#e9e4dc;--muted:#bdb6ab;
+      --stroke:rgba(255,255,255,0.10);--gold:#c8a96a;--shadow:0 18px 60px rgba(0,0,0,0.55);
+      --radius2:26px;--font-serif:"Playfair Display",serif;--font-sans:"Inter",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    }
+    *{box-sizing:border-box;}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:var(--font-sans);}
+    a{color:var(--gold);text-decoration:none;}
+    a:hover{opacity:0.95;text-decoration:underline;}
+    .container{width:min(900px,92%);margin:0 auto;padding:36px 0 60px;}
+    .card{border:1px solid var(--stroke);border-radius:var(--radius2);background:rgba(255,255,255,0.03);padding:22px;box-shadow:var(--shadow);}
+    h1{font-family:var(--font-serif);letter-spacing:1px;margin:0 0 10px;font-size:34px;}
+    p,li{color:rgba(233,228,220,0.78);line-height:1.75;}
+    .muted{color:rgba(233,228,220,0.60);font-size:13px;margin-top:10px;}
+    .toplinks{display:flex;gap:14px;flex-wrap:wrap;margin:0 0 18px;}
+    .badge{display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:0.8px;text-transform:uppercase;
+      color:rgba(233,228,220,0.72);border:1px solid var(--stroke);border-radius:999px;padding:8px 12px;background:rgba(0,0,0,0.18);}
+    .badge strong{color:var(--gold);font-weight:600;}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="toplinks">
+      <a href="index.html">← Back to Home</a>
+      <span class="badge"><strong>Digital Service</strong> Policy</span>
+    </div>
+
+    <div class="card">
+      <h1>Privacy Policy</h1>
+      <p class="muted">Last updated: <span id="d"></span></p>
+
+      <p>
+        Power Suit Identity (“we”, “us”, “our”) provides digital style consulting services.
+        This Privacy Policy explains what information we collect and how we use it.
+      </p>
+
+      <h3 style="font-family:var(--font-serif);letter-spacing:1px;margin-top:18px;">Information We Collect</h3>
+      <ul>
+        <li>Contact details such as name and email.</li>
+        <li>Optional information you provide (phone, preferences, event purpose, sizing notes).</li>
+      </ul>
+
+      <h3 style="font-family:var(--font-serif);letter-spacing:1px;margin-top:18px;">How We Use Information</h3>
+      <ul>
+        <li>To create and deliver your personalized PDF style report.</li>
+        <li>To communicate with you about your request and delivery.</li>
+        <li>To improve our service experience.</li>
+      </ul>
+
+      <h3 style="font-family:var(--font-serif);letter-spacing:1px;margin-top:18px;">Payments</h3>
+      <p>
+        Payments are processed securely by Stripe. We do not store or process credit card details on our servers.
+      </p>
+
+      <h3 style="font-family:var(--font-serif);letter-spacing:1px;margin-top:18px;">Sharing</h3>
+      <p>
+        We do not sell or rent your personal information. We only share data when necessary to deliver the service
+        (for example, payment processing through Stripe) or if required by law.
+      </p>
+
+      <h3 style="font-family:var(--font-serif);letter-spacing:1px;margin-top:18px;">Contact</h3>
+      <p>
+        If you have questions, email us at:
+        <a href="mailto:contact@tailorme.me">contact@tailorme.me</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("d").textContent = new Date().toLocaleDateString();
+  </script>
+</body>
+</html>
