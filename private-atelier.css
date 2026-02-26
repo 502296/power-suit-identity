@@ -1,0 +1,259 @@
+:root{
+--bg: #f3efe6; /* warm beige */
+--paper:#fbf8f1;
+--ink:#151311;
+--muted:#6b645a;
+--gold:#c8a96a;
+--stroke: rgba(21,19,17,0.10);
+--shadow: 0 22px 70px rgba(0,0,0,0.10);
+
+--radius: 18px;
+--serif: "Playfair Display", ui-serif, Georgia, serif;
+--sans: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+body{
+margin:0;
+color:var(--ink);
+background:
+radial-gradient(1200px 700px at 20% 5%, rgba(200,169,106,0.12), transparent 55%),
+radial-gradient(1000px 600px at 80% 0%, rgba(21,19,17,0.06), transparent 60%),
+var(--bg);
+font-family:var(--sans);
+}
+
+.wrap{
+max-width: 980px;
+margin: 0 auto;
+padding: 28px 18px 44px;
+}
+
+.top{ margin: 14px 0 18px; text-align:center; }
+.kicker{
+letter-spacing: 0.18em;
+text-transform: uppercase;
+font-size: 12px;
+color: var(--muted);
+}
+.rule{
+width: 140px;
+height: 1px;
+background: linear-gradient(90deg, transparent, var(--gold), transparent);
+margin: 14px auto 0;
+}
+
+.card{
+background: rgba(251,248,241,0.72);
+border: 1px solid var(--stroke);
+border-radius: var(--radius);
+padding: 22px 20px;
+box-shadow: var(--shadow);
+}
+
+h1{
+font-family: var(--serif);
+font-weight: 600;
+font-size: 26px;
+margin: 0 0 8px;
+}
+.lead{
+margin: 0;
+color: var(--muted);
+line-height: 1.55;
+}
+
+.status{
+margin-top: 14px;
+font-size: 13px;
+color: var(--muted);
+}
+
+.hidden{ display:none; }
+
+/* =========================================================
+✅ NEW: Mobile-first Atelier Gallery (Hero + Grid + List)
+========================================================= */
+
+.gallery-wrap{
+margin-top: 18px;
+}
+
+.gallery-head{
+margin: 12px 2px 10px;
+text-align: left;
+}
+
+.gallery-title{
+font-family: var(--serif);
+font-size: 18px;
+margin: 0 0 2px;
+}
+
+.gallery-sub{
+color: var(--muted);
+font-size: 13px;
+line-height: 1.45;
+}
+
+/* HERO */
+.hero-shot{
+margin: 0 0 14px;
+background: rgba(251,248,241,0.62);
+border: 1px solid var(--stroke);
+border-radius: var(--radius);
+overflow: hidden;
+box-shadow: 0 22px 60px rgba(0,0,0,0.10);
+}
+
+.hero-shot img{
+width:100%;
+height:auto;
+display:block;
+}
+
+.hero-shot .hero-cap{
+padding: 12px 14px 14px;
+display:flex;
+justify-content: space-between;
+align-items: baseline;
+gap: 12px;
+}
+
+.hero-shot .hero-cap b{
+font-family: var(--serif);
+font-weight: 600;
+}
+
+.hero-shot .hero-cap span{
+color: var(--muted);
+font-size: 12px;
+letter-spacing: 0.02em;
+}
+
+/* GRID (first 8 after hero) */
+.gallery-grid{
+display:grid;
+grid-template-columns: 1fr; /* mobile */
+gap: 14px;
+}
+
+@media (min-width: 560px){
+.gallery-grid{ grid-template-columns: 1fr 1fr; }
+}
+@media (min-width: 980px){
+.gallery-grid{ grid-template-columns: 1fr 1fr 1fr; }
+}
+
+.grid-item{
+margin:0;
+background: rgba(251,248,241,0.55);
+border: 1px solid var(--stroke);
+border-radius: var(--radius);
+overflow:hidden;
+box-shadow: 0 18px 50px rgba(0,0,0,0.08);
+}
+
+.grid-item img{
+width:100%;
+height:auto;
+display:block;
+}
+
+.grid-item figcaption{
+padding: 10px 12px 12px;
+color: var(--muted);
+font-size: 12px;
+}
+
+/* DIVIDER */
+.divider{
+height: 1px;
+margin: 18px 0 14px;
+background: linear-gradient(90deg, transparent, rgba(200,169,106,0.75), transparent);
+}
+
+/* LIST (the rest) */
+.gallery-list{
+display:grid;
+grid-template-columns: 1fr;
+gap: 14px;
+}
+
+.list-item{
+margin:0;
+background: rgba(251,248,241,0.50);
+border: 1px solid var(--stroke);
+border-radius: var(--radius);
+overflow:hidden;
+box-shadow: 0 14px 40px rgba(0,0,0,0.07);
+}
+
+.list-item img{
+width:100%;
+height:auto;
+display:block;
+}
+
+.list-item figcaption{
+padding: 10px 12px 12px;
+color: var(--muted);
+font-size: 12px;
+}
+
+/* ========================================================= */
+
+.upsell{
+margin-top: 18px;
+}
+
+.upsell-card{
+background: rgba(251,248,241,0.82);
+border: 1px solid var(--stroke);
+border-radius: var(--radius);
+padding: 18px 18px;
+box-shadow: var(--shadow);
+text-align:center;
+}
+
+.upsell-card h2{
+font-family: var(--serif);
+font-size: 22px;
+margin: 0 0 6px;
+}
+
+.upsell-card p{
+margin: 0 0 14px;
+color: var(--muted);
+}
+
+.btn{
+appearance:none;
+border: 1px solid rgba(200,169,106,0.55);
+background: linear-gradient(180deg, #d9c088, #b89247);
+color: #151311;
+font-weight: 700;
+letter-spacing: 0.02em;
+padding: 12px 16px;
+border-radius: 14px;
+cursor:pointer;
+box-shadow: 0 14px 30px rgba(0,0,0,0.12);
+transition: transform .12s ease, filter .12s ease;
+}
+
+.btn:hover{ filter: brightness(1.02); transform: translateY(-1px); }
+.btn:active{ transform: translateY(0px) scale(0.99); }
+
+.fine{
+margin-top: 10px !important;
+font-size: 12px;
+color: rgba(107,100,90,0.9);
+}
+
+.foot{
+text-align:center;
+margin-top: 26px;
+color: rgba(107,100,90,0.85);
+font-size: 12px;
+}
