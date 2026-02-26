@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Power Suit Identity — Private Atelier</title>
+<meta name="robots" content="noindex,nofollow" />
+<link rel="stylesheet" href="/private-atelier.css" />
+</head>
+<body>
+<main class="wrap">
+<header class="top">
+<div class="kicker">Private Atelier Selection</div>
+<div class="rule"></div>
+</header>
+
+<section class="card">
+<h1>Thank you for choosing Power Suit Identity.</h1>
+<p class="lead">
+Your personalized style report will be delivered within 24 hours.
+<br />
+Meanwhile, explore a curated private selection tailored to your style.
+</p>
+
+<div id="status" class="status">Verifying your access…</div>
+</section>
+
+<!-- ✅ Hidden until verified -->
+<section id="galleryWrap" class="gallery-wrap hidden" aria-hidden="true">
+<!-- HERO -->
+<div id="heroSlot"></div>
+
+<div class="gallery-head">
+<div class="gallery-title">Curated Looks</div>
+<div class="gallery-sub">A private selection — designed for clarity and confidence.</div>
+</div>
+
+<!-- GRID (first 8 after hero) -->
+<div id="gridSlot" class="gallery-grid"></div>
+
+<div class="divider"></div>
+
+<div class="gallery-head">
+<div class="gallery-title">More Inspirations</div>
+<div class="gallery-sub">Scroll calmly. Choose what speaks to you.</div>
+</div>
+
+<!-- LIST (rest) -->
+<div id="listSlot" class="gallery-list"></div>
+</section>
+
+<!-- Upsell (hidden until verified) -->
+<section id="upsell" class="upsell hidden" aria-hidden="true">
+<div class="upsell-card">
+<h2>Refine your presence further.</h2>
+<p>Add an additional personalized look for <strong>$15</strong>.</p>
+
+<button id="btnAnother" class="btn" type="button">
+Book Another Look
+</button>
+
+<p class="fine">Limited to one additional look per order.</p>
+</div>
+</section>
+
+<footer class="foot">
+<span>© <span id="year"></span> Power Suit Identity</span>
+</footer>
+</main>
+
+<script src="/private-atelier.js"></script>
+</body>
+</html>
