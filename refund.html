@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Refund Policy — Power Suit Identity</title>
+  <meta name="description" content="Refund Policy for Power Suit Identity." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{--bg:#050607;--text:#e9e4dc;--stroke:rgba(255,255,255,0.10);--gold:#c8a96a;--shadow:0 18px 60px rgba(0,0,0,0.55);--radius2:26px;
+      --font-serif:"Playfair Display",serif;--font-sans:"Inter",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;}
+    *{box-sizing:border-box;}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:var(--font-sans);}
+    a{color:var(--gold);text-decoration:none;}
+    a:hover{text-decoration:underline;}
+    .container{width:min(900px,92%);margin:0 auto;padding:36px 0 60px;}
+    .card{border:1px solid var(--stroke);border-radius:var(--radius2);background:rgba(255,255,255,0.03);padding:22px;box-shadow:var(--shadow);}
+    h1{font-family:var(--font-serif);letter-spacing:1px;margin:0 0 10px;font-size:34px;}
+    p,li{color:rgba(233,228,220,0.78);line-height:1.75;}
+    .muted{color:rgba(233,228,220,0.60);font-size:13px;margin-top:10px;}
+    .toplinks{display:flex;gap:14px;flex-wrap:wrap;margin:0 0 18px;}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="toplinks">
+      <a href="index.html">← Back to Home</a>
+    </div>
+
+    <div class="card">
+      <h1>Refund Policy</h1>
+      <p class="muted">Last updated: <span id="d"></span></p>
+
+      <p>
+        Because this is a <strong>custom, personalized digital service</strong>,
+        refunds are limited once work has started or the report has been delivered.
+      </p>
+
+      <ul>
+        <li>If your report has <strong>not</strong> been delivered, you may request cancellation within 24 hours of purchase.</li>
+        <li>Once the personalized report is delivered by email, the service is considered fulfilled and the sale is final.</li>
+      </ul>
+
+      <p>
+        To request a refund (if eligible), email:
+        <a href="mailto:contact@tailorme.me">contact@tailorme.me</a>
+      </p>
+
+      <p class="muted">
+        Note: This policy is designed for a digital consulting service. No physical products are sold or shipped.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("d").textContent = new Date().toLocaleDateString();
+  </script>
+</body>
+</html>
