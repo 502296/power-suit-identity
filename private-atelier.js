@@ -1,198 +1,228 @@
 // private-atelier.js (FULL) — Verified access + Hero + Grid + List + Upsell
+// ✅ Updated: image path fallback + clearer debugging
 
 (function () {
-const $ = (id) => document.getElementById(id);
+  const $ = (id) => document.getElementById(id);
 
-// Footer year
-const yearEl = $("year");
-if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+  // Footer year
+  const yearEl = $("year");
+  if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 
-// Query params
-const params = new URLSearchParams(window.location.search);
-const sessionId = params.get("session_id");
+  // Query params
+  const params = new URLSearchParams(window.location.search);
+  const sessionId = params.get("session_id");
 
-// Elements
-const status = $("status");
+  // Elements
+  const status = $("status");
 
-// ✅ New gallery structure
-const galleryWrap = $("galleryWrap");
-const heroSlot = $("heroSlot");
-const gridSlot = $("gridSlot");
-const listSlot = $("listSlot");
+  // ✅ New gallery structure
+  const galleryWrap = $("galleryWrap");
+  const heroSlot = $("heroSlot");
+  const gridSlot = $("gridSlot");
+  const listSlot = $("listSlot");
 
-const upsell = $("upsell");
-const btnAnother = $("btnAnother");
+  const upsell = $("upsell");
+  const btnAnother = $("btnAnother");
 
-function deny() {
-window.location.href = "/";
-}
+  function deny() {
+    window.location.href = "/";
+  }
 
-function showVerified() {
-if (status) status.textContent = "Access verified. Welcome to the Private Atelier.";
+  function showVerified() {
+    if (status) status.textContent = "Access verified. Welcome to the Private Atelier.";
 
-if (galleryWrap) {
-galleryWrap.classList.remove("hidden");
-galleryWrap.setAttribute("aria-hidden", "false");
-}
+    if (galleryWrap) {
+      galleryWrap.classList.remove("hidden");
+      galleryWrap.setAttribute("aria-hidden", "false");
+    }
 
-if (upsell) {
-upsell.classList.remove("hidden");
-upsell.setAttribute("aria-hidden", "false");
-}
+    if (upsell) {
+      upsell.classList.remove("hidden");
+      upsell.setAttribute("aria-hidden", "false");
+    }
 
-// ✅ Load images dynamically into Hero + Grid + List
-loadGallery();
-}
+    loadGallery();
+  }
 
-function cleanFileName(file) {
-// Only allow safe filename characters
-return String(file || "").replace(/[^a-zA-Z0-9._-]/g, "");
-}
+  function cleanFileName(file) {
+    return String(file || "").replace(/[^a-zA-Z0-9._-]/g, "");
+  }
 
-function renderHero(file) {
-if (!heroSlot) return;
+  // ✅ Try these base paths in order
+  // 1) Vercel/static: /images/atelier/..  (if files are in /public/images/atelier)
+  // 2) Some builds:  /public/images/atelier/.. (rare, but harmless)
+  const IMAGE_BASES = ["/images/atelier/", "/public/images/atelier/"];
 
-heroSlot.innerHTML = "";
+  function createSmartImg(file, alt, loading) {
+    const safeFile = cleanFileName(file);
+    const img = document.createElement("img");
+    img.alt = alt || "Power Suit Identity — Private Atelier";
+    img.loading = loading || "lazy";
 
-const safeFile = cleanFileName(file);
-if (!safeFile) return;
+    let idx = 0;
+    const tryNext = () => {
+      if (idx >= IMAGE_BASES.length) {
+        console.warn("Image failed in all paths:", safeFile);
+        return;
+      }
+      img.src = IMAGE_BASES[idx] + safeFile;
+      idx++;
+    };
 
-const wrap = document.createElement("figure");
-wrap.className = "hero-shot";
+    img.addEventListener("error", () => tryNext());
+    tryNext();
+    return img;
+  }
 
-// Hero loads eager for best mobile UX
-wrap.innerHTML = `
-<img src="/images/atelier/${safeFile}" alt="Power Suit Identity — Featured Look" loading="eager" />
-<div class="hero-cap">
-<b>Featured Look</b>
-<span>Private Atelier</span>
-</div>
-`;
+  function renderHero(file) {
+    if (!heroSlot) return;
 
-heroSlot.appendChild(wrap);
-}
+    heroSlot.innerHTML = "";
 
-function makeFigure(cls, file, caption) {
-const safeFile = cleanFileName(file);
-if (!safeFile) return null;
+    const safeFile = cleanFileName(file);
+    if (!safeFile) return;
 
-const fig = document.createElement("figure");
-fig.className = cls;
+    const wrap = document.createElement("figure");
+    wrap.className = "hero-shot";
 
-fig.innerHTML = `
-<img src="/images/atelier/${safeFile}" alt="Power Suit Identity — Private Atelier" loading="lazy" />
-<figcaption>${caption}</figcaption>
-`;
+    const img = createSmartImg(
+      safeFile,
+      "Power Suit Identity — Featured Look",
+      "eager"
+    );
 
-return fig;
-}
+    const cap = document.createElement("div");
+    cap.className = "hero-cap";
+    cap.innerHTML = `<b>Featured Look</b><span>Private Atelier</span>`;
 
-async function loadGallery() {
-try {
-const res = await fetch("/api/list-atelier-images", {
-method: "GET",
-headers: { Accept: "application/json" },
-});
+    wrap.appendChild(img);
+    wrap.appendChild(cap);
 
-const data = await res.json();
+    heroSlot.appendChild(wrap);
+  }
 
-if (!res.ok || !data || !Array.isArray(data.images)) {
-console.error("Bad gallery response");
-return;
-}
+  function makeFigure(cls, file, caption) {
+    const safeFile = cleanFileName(file);
+    if (!safeFile) return null;
 
-// Sanitize and keep only valid filenames
-const images = data.images.map(cleanFileName).filter(Boolean);
+    const fig = document.createElement("figure");
+    fig.className = cls;
 
-if (images.length === 0) return;
+    const img = createSmartImg(
+      safeFile,
+      "Power Suit Identity — Private Atelier",
+      "lazy"
+    );
 
-// Clear slots
-if (gridSlot) gridSlot.innerHTML = "";
-if (listSlot) listSlot.innerHTML = "";
+    const fc = document.createElement("figcaption");
+    fc.textContent = caption || "Power Suit Identity";
 
-// ✅ 1) HERO = first image
-renderHero(images[0]);
+    fig.appendChild(img);
+    fig.appendChild(fc);
 
-// ✅ 2) GRID = next 8 images (so top 9 are "featured" including hero)
-const gridImages = images.slice(1, 9);
-gridImages.forEach((file) => {
-const fig = makeFigure("grid-item", file, "Power Suit Identity");
-if (fig && gridSlot) gridSlot.appendChild(fig);
-});
+    return fig;
+  }
 
-// ✅ 3) LIST = rest
-const rest = images.slice(9);
-rest.forEach((file) => {
-const fig = makeFigure("list-item", file, "Power Suit Identity");
-if (fig && listSlot) listSlot.appendChild(fig);
-});
-} catch (e) {
-console.error("Gallery load error:", e);
-}
-}
+  async function loadGallery() {
+    try {
+      const res = await fetch("/api/list-atelier-images", {
+        method: "GET",
+        headers: { Accept: "application/json" },
+      });
 
-async function verifyAccess() {
-if (!status) return;
+      const data = await res.json();
 
-if (!sessionId) {
-status.textContent = "Missing session. Redirecting…";
-return setTimeout(deny, 700);
-}
+      if (!res.ok || !data || !Array.isArray(data.images)) {
+        console.error("Bad gallery response:", data);
+        if (status) status.textContent = "Gallery error. Please try again.";
+        return;
+      }
 
-try {
-const res = await fetch(
-`/api/verify-session?session_id=${encodeURIComponent(sessionId)}`,
-{
-method: "GET",
-headers: { Accept: "application/json" },
-}
-);
+      const images = data.images.map(cleanFileName).filter(Boolean);
 
-const data = await res.json();
+      if (images.length === 0) {
+        console.warn("No images returned from API");
+        if (status) status.textContent = "Verified, but no images found.";
+        return;
+      }
 
-if (!res.ok || !data || !data.ok) {
-status.textContent = "Access not verified. Redirecting…";
-return setTimeout(deny, 700);
-}
+      if (gridSlot) gridSlot.innerHTML = "";
+      if (listSlot) listSlot.innerHTML = "";
 
-// ✅ Verified
-showVerified();
+      renderHero(images[0]);
 
-// ✅ Upsell button handler
-if (btnAnother) {
-btnAnother.addEventListener("click", async () => {
-btnAnother.disabled = true;
-btnAnother.textContent = "Opening checkout…";
+      const gridImages = images.slice(1, 9);
+      gridImages.forEach((file) => {
+        const fig = makeFigure("grid-item", file, "Power Suit Identity");
+        if (fig && gridSlot) gridSlot.appendChild(fig);
+      });
 
-try {
-const r = await fetch(`/api/create-another-look-session`, {
-method: "POST",
-headers: { "Content-Type": "application/json" },
-body: JSON.stringify({ parent_session_id: sessionId }),
-});
+      const rest = images.slice(9);
+      rest.forEach((file) => {
+        const fig = makeFigure("list-item", file, "Power Suit Identity");
+        if (fig && listSlot) listSlot.appendChild(fig);
+      });
+    } catch (e) {
+      console.error("Gallery load error:", e);
+      if (status) status.textContent = "Gallery failed to load. Please try again.";
+    }
+  }
 
-const j = await r.json();
+  async function verifyAccess() {
+    if (!status) return;
 
-if (!r.ok || !j || !j.url) {
-throw new Error("No checkout url returned");
-}
+    if (!sessionId) {
+      status.textContent = "Missing session. Redirecting…";
+      return setTimeout(deny, 700);
+    }
 
-window.location.href = j.url;
-} catch (e) {
-console.error("Upsell error:", e);
-btnAnother.disabled = false;
-btnAnother.textContent = "Book Another Look";
-alert("Sorry — please try again.");
-}
-});
-}
-} catch (err) {
-console.error("Verification failed:", err);
-status.textContent = "Verification failed. Redirecting…";
-return setTimeout(deny, 700);
-}
-}
+    try {
+      const res = await fetch(
+        `/api/verify-session?session_id=${encodeURIComponent(sessionId)}`,
+        { method: "GET", headers: { Accept: "application/json" } }
+      );
 
-// Start
-verifyAccess();
+      const data = await res.json();
+
+      if (!res.ok || !data || !data.ok) {
+        console.error("Not verified:", data);
+        status.textContent = "Access not verified. Redirecting…";
+        return setTimeout(deny, 700);
+      }
+
+      showVerified();
+
+      if (btnAnother) {
+        btnAnother.addEventListener("click", async () => {
+          btnAnother.disabled = true;
+          btnAnother.textContent = "Opening checkout…";
+
+          try {
+            const r = await fetch(`/api/create-another-look-session`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ parent_session_id: sessionId }),
+            });
+
+            const j = await r.json();
+
+            if (!r.ok || !j || !j.url) throw new Error("No checkout url returned");
+
+            window.location.href = j.url;
+          } catch (e) {
+            console.error("Upsell error:", e);
+            btnAnother.disabled = false;
+            btnAnother.textContent = "Book Another Look";
+            alert("Sorry — please try again.");
+          }
+        });
+      }
+    } catch (err) {
+      console.error("Verification failed:", err);
+      status.textContent = "Verification failed. Redirecting…";
+      return setTimeout(deny, 700);
+    }
+  }
+
+  verifyAccess();
 })();
