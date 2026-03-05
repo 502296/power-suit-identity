@@ -1,28 +1,35 @@
-import Stripe from "stripe";
+const Stripe = require("stripe");
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+module.exports = async (req, res) => {
+  try {
+    const session_id = req.query.session_id;
 
-export default async function handler(req, res) {
-try {
-const sessionId = req.query.session_id;
-if (!sessionId) return res.status(400).json({ ok: false, error: "missing_session_id" });
+    if (!session_id) {
+      return res.status(400).json({ ok: false, error: "missing_session_id" });
+    }
 
-const session = await stripe.checkout.sessions.retrieve(sessionId);
+    if (!process.env.STRIPE_SECRET_KEY) {
+      return res.status(500).json({ ok: false, error: "missing_STRIPE_SECRET_KEY" });
+    }
 
-const paid =
-session &&
-(session.payment_status === "paid" || session.status === "complete");
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-// Optional: also verify it matches your product/price if you want stricter security
-// const lineItems = await stripe.checkout.sessions.listLineItems(sessionId, { limit: 10 });
+    const session = await stripe.checkout.sessions.retrieve(session_id);
 
-if (!paid) return res.status(403).json({ ok: false, error: "not_paid" });
+    const paid =
+      session &&
+      (session.payment_status === "paid" || session.status === "complete");
 
-return res.status(200).json({
-ok: true,
-customer_email: session.customer_details?.email || null,
-});
-} catch (e) {
-return res.status(500).json({ ok: false, error: "server_error" });
-}
-}
+    return res.status(200).json({
+      ok: !!paid,
+      payment_status: session.payment_status,
+      status: session.status
+    });
+  } catch (e) {
+    return res.status(500).json({
+      ok: false,
+      error: "verify_failed",
+      message: e?.message || String(e)
+    });
+  }
+};
