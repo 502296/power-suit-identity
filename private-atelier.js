@@ -1,61 +1,104 @@
-// private-atelier.js (FULL) — Verify session then redirect to gallery
-// ✅ Goal: After payment -> verify -> redirect to /atelier-gallery.html?paid=1
-// ✅ Keeps protection: no verified session => redirect to /index.html
+// private-atelier.js (FINAL)
+// Verify session, then load atelier images on the same page
 
 (function () {
   const $ = (id) => document.getElementById(id);
 
-  // Footer year
   const yearEl = $("year");
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 
-  // Query params
   const params = new URLSearchParams(window.location.search);
   const sessionId = params.get("session_id");
 
-  // Elements
   const status = $("status");
+  const gallery = $("gallery");
 
-  function deny() {
-    // Safer than "/"
-    window.location.href = "/index.html";
-  }
-
-  function goToGallery() {
-    // ✅ Simple redirect after verified
-    window.location.href = "/atelier-gallery.html?paid=1";
+  function deny(message) {
+    if (status) status.textContent = message || "Access not verified. Redirecting...";
+    setTimeout(() => {
+      window.location.href = "/index.html";
+    }, 1200);
   }
 
   async function verifyAccess() {
-    if (status) status.textContent = "Verifying payment…";
+    if (status) status.textContent = "Verifying payment...";
 
     if (!sessionId) {
-      if (status) status.textContent = "Missing session. Redirecting…";
-      return setTimeout(deny, 700);
+      return deny("Missing session. Redirecting...");
     }
 
     try {
       const res = await fetch(
         `/api/verify-session?session_id=${encodeURIComponent(sessionId)}`,
-        { method: "GET", headers: { Accept: "application/json" } }
+        {
+          method: "GET",
+          headers: { Accept: "application/json" },
+        }
       );
 
       const data = await res.json().catch(() => ({}));
 
       if (!res.ok || !data || !data.ok) {
         console.error("Not verified:", data);
-        if (status) status.textContent = "Access not verified. Redirecting…";
-        return setTimeout(deny, 900);
+        return deny("Access not verified. Redirecting...");
       }
 
-      if (status) status.textContent = "Access verified. Redirecting to gallery…";
-      return setTimeout(goToGallery, 600);
+      if (status) status.textContent = "Access verified. Loading gallery...";
+      return true;
     } catch (err) {
       console.error("Verification failed:", err);
-      if (status) status.textContent = "Verification failed. Redirecting…";
-      return setTimeout(deny, 900);
+      return deny("Verification failed. Redirecting...");
     }
   }
 
-  verifyAccess();
+  async function loadImages() {
+    try {
+      const res = await fetch("/api/list-atelier-images", {
+        headers: { Accept: "application/json" },
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok || !data || !data.images || !data.images.length) {
+        console.error("Images load failed:", data);
+        if (status) status.textContent = "Gallery error. Please try again.";
+        return;
+      }
+
+      if (!gallery) {
+        console.error("Missing #gallery element in HTML");
+        if (status) status.textContent = "Gallery container not found.";
+        return;
+      }
+
+      gallery.innerHTML = "";
+
+      data.images.forEach((file) => {
+        const card = document.createElement("div");
+        card.className = "shot";
+
+        const img = document.createElement("img");
+        img.src = `/images/atelier/${file}`;
+        img.alt = "Power Suit Identity Look";
+        img.loading = "lazy";
+
+        card.appendChild(img);
+        gallery.appendChild(card);
+      });
+
+      gallery.classList.remove("hidden");
+      gallery.setAttribute("aria-hidden", "false");
+
+      if (status) status.textContent = "";
+    } catch (err) {
+      console.error("Load images error:", err);
+      if (status) status.textContent = "Failed to load gallery.";
+    }
+  }
+
+  (async function init() {
+    const ok = await verifyAccess();
+    if (!ok) return;
+    await loadImages();
+  })();
 })();
