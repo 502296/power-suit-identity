@@ -1,5 +1,5 @@
 // private-atelier.js
-// FINAL — verifies Stripe session, then renders the private gallery on the same page
+// DEBUG-STABLE VERSION — keeps the page open and shows the reason
 
 (function () {
   const $ = (id) => document.getElementById(id);
@@ -24,16 +24,15 @@
 
   function deny(message) {
     showStatus(message || "We couldn't confirm your access.");
-    setTimeout(() => {
-      window.location.href = "/index.html";
-    }, 1500);
+    // ❌ no redirect now
+    console.error("ACCESS DENIED:", message);
   }
 
   async function verifyAccess() {
     showStatus("Preparing your private selection...");
 
     if (!sessionId) {
-      deny("We couldn't confirm your access.");
+      deny("Missing session_id in URL.");
       return false;
     }
 
@@ -42,17 +41,15 @@
         `/api/verify-session?session_id=${encodeURIComponent(sessionId)}`,
         {
           method: "GET",
-          headers: {
-            Accept: "application/json",
-          },
+          headers: { Accept: "application/json" },
         }
       );
 
       const data = await res.json().catch(() => ({}));
+      console.log("verify-session response:", data);
 
       if (!res.ok || !data || data.ok !== true) {
-        console.error("verify-session failed:", data);
-        deny("We couldn't confirm your access.");
+        deny("Session found, but verification failed.");
         return false;
       }
 
@@ -60,7 +57,7 @@
       return true;
     } catch (error) {
       console.error("verifyAccess error:", error);
-      deny("Something went wrong while loading your selection.");
+      deny("Verification request failed.");
       return false;
     }
   }
@@ -83,16 +80,14 @@
     try {
       const res = await fetch("/api/list-atelier-images", {
         method: "GET",
-        headers: {
-          Accept: "application/json",
-        },
+        headers: { Accept: "application/json" },
       });
 
       const data = await res.json().catch(() => ({}));
+      console.log("list-atelier-images response:", data);
 
       if (!res.ok || !data || !Array.isArray(data.images) || data.images.length === 0) {
-        console.error("list-atelier-images failed:", data);
-        showStatus("Your private selection is being prepared.");
+        showStatus("Images API worked incorrectly or returned no images.");
         return;
       }
 
@@ -102,25 +97,18 @@
       if (gridSlot) gridSlot.innerHTML = "";
       if (listSlot) listSlot.innerHTML = "";
 
-      // 1) Hero image
       const heroImage = images.shift();
       if (heroImage && heroSlot) {
         heroSlot.appendChild(createImageCard(heroImage, "hero-shot"));
       }
 
-      // 2) Next 8 images in grid
       const gridImages = images.splice(0, 8);
       gridImages.forEach((fileName) => {
-        if (gridSlot) {
-          gridSlot.appendChild(createImageCard(fileName, "shot"));
-        }
+        if (gridSlot) gridSlot.appendChild(createImageCard(fileName, "shot"));
       });
 
-      // 3) Remaining images in list
       images.forEach((fileName) => {
-        if (listSlot) {
-          listSlot.appendChild(createImageCard(fileName, "shot"));
-        }
+        if (listSlot) listSlot.appendChild(createImageCard(fileName, "shot"));
       });
 
       if (galleryWrap) {
@@ -136,7 +124,7 @@
       showStatus("");
     } catch (error) {
       console.error("loadImages error:", error);
-      showStatus("Your selection is ready shortly.");
+      showStatus("Image loading failed.");
     }
   }
 
@@ -160,7 +148,6 @@
       const data = await res.json().catch(() => ({}));
 
       if (!res.ok || !data || !data.url) {
-        console.error("create-another-look-session failed:", data);
         alert("Unable to start checkout right now.");
         return;
       }
@@ -182,7 +169,6 @@
   (async function init() {
     const ok = await verifyAccess();
     if (!ok) return;
-
     await loadImages();
   })();
 })();
