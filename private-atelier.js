@@ -1,5 +1,5 @@
-// private-atelier.js (FINAL)
-// Verify session, then load atelier images inside private-atelier.html
+// private-atelier.js
+// FINAL — verifies Stripe session, then renders the private gallery on the same page
 
 (function () {
   const $ = (id) => document.getElementById(id);
@@ -18,18 +18,22 @@
   const params = new URLSearchParams(window.location.search);
   const sessionId = params.get("session_id");
 
+  function showStatus(message) {
+    if (status) status.textContent = message || "";
+  }
+
   function deny(message) {
-    if (status) status.textContent = message || "Access not verified. Redirecting...";
+    showStatus(message || "We couldn't confirm your access.");
     setTimeout(() => {
       window.location.href = "/index.html";
-    }, 1200);
+    }, 1500);
   }
 
   async function verifyAccess() {
-    if (status) status.textContent = "Verifying payment...";
+    showStatus("Preparing your private selection...");
 
     if (!sessionId) {
-      deny("Missing session. Redirecting...");
+      deny("We couldn't confirm your access.");
       return false;
     }
 
@@ -38,35 +42,38 @@
         `/api/verify-session?session_id=${encodeURIComponent(sessionId)}`,
         {
           method: "GET",
-          headers: { Accept: "application/json" },
+          headers: {
+            Accept: "application/json",
+          },
         }
       );
 
       const data = await res.json().catch(() => ({}));
 
-      if (!res.ok || !data || !data.ok) {
-        console.error("Not verified:", data);
-        deny("Access not verified. Redirecting...");
+      if (!res.ok || !data || data.ok !== true) {
+        console.error("verify-session failed:", data);
+        deny("We couldn't confirm your access.");
         return false;
       }
 
-      if (status) status.textContent = "Access verified. Loading selection...";
+      showStatus("Access confirmed. Loading your private selection...");
       return true;
-    } catch (err) {
-      console.error("Verification failed:", err);
-      deny("Verification failed. Redirecting...");
+    } catch (error) {
+      console.error("verifyAccess error:", error);
+      deny("Something went wrong while loading your selection.");
       return false;
     }
   }
 
-  function makeCard(file, extraClass = "") {
+  function createImageCard(fileName, className) {
     const card = document.createElement("div");
-    card.className = extraClass ? extraClass : "shot";
+    card.className = className;
 
     const img = document.createElement("img");
-    img.src = `/images/atelier/${file}`;
-    img.alt = "Power Suit Identity Look";
+    img.src = `/images/atelier/${fileName}`;
+    img.alt = "Power Suit Identity private atelier look";
     img.loading = "lazy";
+    img.decoding = "async";
 
     card.appendChild(img);
     return card;
@@ -75,39 +82,45 @@
   async function loadImages() {
     try {
       const res = await fetch("/api/list-atelier-images", {
-        headers: { Accept: "application/json" },
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+        },
       });
 
       const data = await res.json().catch(() => ({}));
 
-      if (!res.ok || !data || !Array.isArray(data.images) || !data.images.length) {
-        console.error("Images load failed:", data);
-        if (status) status.textContent = "Gallery error. Please try again.";
+      if (!res.ok || !data || !Array.isArray(data.images) || data.images.length === 0) {
+        console.error("list-atelier-images failed:", data);
+        showStatus("Your private selection is being prepared.");
         return;
       }
 
-      const images = data.images;
+      const images = data.images.slice();
 
       if (heroSlot) heroSlot.innerHTML = "";
       if (gridSlot) gridSlot.innerHTML = "";
       if (listSlot) listSlot.innerHTML = "";
 
-      // أول صورة = Hero
-      if (images[0] && heroSlot) {
-        const heroCard = makeCard(images[0], "hero-shot");
-        heroSlot.appendChild(heroCard);
+      // 1) Hero image
+      const heroImage = images.shift();
+      if (heroImage && heroSlot) {
+        heroSlot.appendChild(createImageCard(heroImage, "hero-shot"));
       }
 
-      // 8 صور بعد الـ Hero = Grid
-      const gridImages = images.slice(1, 9);
-      gridImages.forEach((file) => {
-        if (gridSlot) gridSlot.appendChild(makeCard(file, "shot"));
+      // 2) Next 8 images in grid
+      const gridImages = images.splice(0, 8);
+      gridImages.forEach((fileName) => {
+        if (gridSlot) {
+          gridSlot.appendChild(createImageCard(fileName, "shot"));
+        }
       });
 
-      // الباقي = List
-      const listImages = images.slice(9);
-      listImages.forEach((file) => {
-        if (listSlot) listSlot.appendChild(makeCard(file, "shot"));
+      // 3) Remaining images in list
+      images.forEach((fileName) => {
+        if (listSlot) {
+          listSlot.appendChild(createImageCard(fileName, "shot"));
+        }
       });
 
       if (galleryWrap) {
@@ -120,52 +133,56 @@
         upsell.setAttribute("aria-hidden", "false");
       }
 
-      if (status) status.textContent = "";
-    } catch (err) {
-      console.error("Load images error:", err);
-      if (status) status.textContent = "Failed to load gallery.";
+      showStatus("");
+    } catch (error) {
+      console.error("loadImages error:", error);
+      showStatus("Your selection is ready shortly.");
     }
   }
 
-  async function createAnotherLookSession() {
+  async function startAnotherLookCheckout() {
+    if (!btnAnother) return;
+
+    const originalText = btnAnother.textContent;
+
     try {
-      if (btnAnother) {
-        btnAnother.disabled = true;
-        btnAnother.textContent = "Loading...";
-      }
+      btnAnother.disabled = true;
+      btnAnother.textContent = "Loading...";
 
       const res = await fetch("/api/create-another-look-session", {
         method: "POST",
-        headers: { Accept: "application/json" },
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
       });
 
       const data = await res.json().catch(() => ({}));
 
       if (!res.ok || !data || !data.url) {
-        console.error("Another look session failed:", data);
-        alert("Could not start checkout. Please try again.");
+        console.error("create-another-look-session failed:", data);
+        alert("Unable to start checkout right now.");
         return;
       }
 
       window.location.href = data.url;
-    } catch (err) {
-      console.error("Checkout error:", err);
+    } catch (error) {
+      console.error("startAnotherLookCheckout error:", error);
       alert("Something went wrong. Please try again.");
     } finally {
-      if (btnAnother) {
-        btnAnother.disabled = false;
-        btnAnother.textContent = "Book Another Look";
-      }
+      btnAnother.disabled = false;
+      btnAnother.textContent = originalText;
     }
   }
 
   if (btnAnother) {
-    btnAnother.addEventListener("click", createAnotherLookSession);
+    btnAnother.addEventListener("click", startAnotherLookCheckout);
   }
 
   (async function init() {
     const ok = await verifyAccess();
     if (!ok) return;
+
     await loadImages();
   })();
 })();
