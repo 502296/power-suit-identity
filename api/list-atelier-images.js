@@ -1,9 +1,20 @@
 module.exports = async (req, res) => {
-  // أسماء الصور (ثابتة وبسيطة)
-  const images = [
-    "01.jpg","02.jpg","03.jpg","04.jpg","05.jpg","06.jpg",
-    "07.jpg","08.jpg","09.jpg","10.jpg","11.jpg","12.jpg"
-  ];
+  try {
 
-  res.status(200).json({ images });
+    const images = [];
+
+    // يولد صور من 01 إلى 99
+    for (let i = 1; i <= 99; i++) {
+      images.push(`${String(i).padStart(2, "0")}.jpg`);
+    }
+
+    return res.status(200).json({ images });
+
+  } catch (e) {
+    return res.status(500).json({
+      images: [],
+      error: "images_list_failed",
+      message: e?.message || String(e)
+    });
+  }
 };
