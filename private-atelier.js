@@ -1,4 +1,3 @@
-// private-atelier.js
 (function () {
   const $ = (id) => document.getElementById(id);
 
@@ -35,7 +34,11 @@
     try {
       showStatus("Loading your private selection...");
 
-      const res = await fetch("/api/list-atelier-images");
+      const res = await fetch("/api/list-atelier-images", {
+        method: "GET",
+        headers: { Accept: "application/json" },
+      });
+
       const data = await res.json().catch(() => ({}));
 
       if (!res.ok || !data || !Array.isArray(data.images) || data.images.length === 0) {
@@ -75,7 +78,7 @@
 
       showStatus("");
     } catch (error) {
-      console.error(error);
+      console.error("loadImages error:", error);
       showStatus("Failed to load images.");
     }
   }
@@ -106,7 +109,7 @@
 
       window.location.href = data.url;
     } catch (error) {
-      console.error(error);
+      console.error("startAnotherLookCheckout error:", error);
       alert("Something went wrong. Please try again.");
     } finally {
       btnAnother.disabled = false;
