@@ -30,17 +30,17 @@ module.exports = async (req, res) => {
               name: "Power Suit Identity — Private Atelier Access",
               description: "Private style selection + personalized report",
             },
-            unit_amount: 4500, // $15.00
+            unit_amount: 4500, // $45.00
           },
           quantity: 1,
         },
       ],
 
       success_url:
-        "https://power-suit-identity.vercel.app/private-atelier.html?session_id={CHECKOUT_SESSION_ID}",
+        "https://powersuitidentity.com/private-atelier.html?session_id={CHECKOUT_SESSION_ID}",
 
       cancel_url:
-        "https://power-suit-identity.vercel.app/index.html",
+        "https://powersuitidentity.com/index.html",
     });
 
     return res.status(200).json({
