@@ -30,7 +30,7 @@ module.exports = async (req, res) => {
               name: "Power Suit Identity — Private Atelier Access",
               description: "Private style selection + personalized report",
             },
-            unit_amount: 1500, // $15.00
+            unit_amount: 4500, // $15.00
           },
           quantity: 1,
         },
