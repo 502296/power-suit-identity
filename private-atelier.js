@@ -12,6 +12,11 @@
   const upsell = $("upsell");
   const btnAnother = $("btnAnother");
 
+  const MAX_IMAGES = 99;
+  const GRID_COUNT = 8;
+  const LIST_BATCH_SIZE = 4;
+  const LIST_BATCH_DELAY = 180;
+
   function showStatus(message) {
     if (status) status.textContent = message || "";
   }
@@ -36,13 +41,31 @@
 
   function buildImageList() {
     const images = [];
-    for (let i = 1; i <= 99; i++) {
+    for (let i = 1; i <= MAX_IMAGES; i++) {
       images.push(`${String(i).padStart(2, "0")}.jpg`);
     }
     return images;
   }
 
-  function loadImagesDirectly() {
+  function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  async function renderListInBatches(images) {
+    if (!listSlot || !images.length) return;
+
+    for (let i = 0; i < images.length; i += LIST_BATCH_SIZE) {
+      const batch = images.slice(i, i + LIST_BATCH_SIZE);
+
+      batch.forEach((fileName) => {
+        listSlot.appendChild(createImageCard(fileName, "shot"));
+      });
+
+      await sleep(LIST_BATCH_DELAY);
+    }
+  }
+
+  async function loadImagesDirectly() {
     try {
       showStatus("Loading your private selection...");
 
@@ -64,13 +87,9 @@
         heroSlot.appendChild(createImageCard(heroImage, "hero-shot"));
       }
 
-      const gridImages = imagePool.splice(0, 8);
+      const gridImages = imagePool.splice(0, GRID_COUNT);
       gridImages.forEach((fileName) => {
         if (gridSlot) gridSlot.appendChild(createImageCard(fileName, "shot"));
-      });
-
-      imagePool.forEach((fileName) => {
-        if (listSlot) listSlot.appendChild(createImageCard(fileName, "shot"));
       });
 
       if (galleryWrap) {
@@ -84,9 +103,23 @@
       }
 
       showStatus("");
+
+      // Load the rest gradually so the page feels fast on mobile
+      await renderListInBatches(imagePool);
     } catch (error) {
       console.error("loadImagesDirectly error:", error);
       showStatus("Failed to load images.");
+    }
+  }
+
+  function getSavedRequestPayload() {
+    try {
+      const raw = localStorage.getItem("psi_request_payload");
+      if (!raw) return {};
+      const parsed = JSON.parse(raw);
+      return parsed && typeof parsed === "object" ? parsed : {};
+    } catch {
+      return {};
     }
   }
 
@@ -99,12 +132,20 @@
       btnAnother.disabled = true;
       btnAnother.textContent = "Loading...";
 
+      const saved = getSavedRequestPayload();
+
+      const payload = {
+        email: saved.email || "",
+        fullName: saved.fullName || "",
+      };
+
       const res = await fetch("/api/create-another-look-session", {
         method: "POST",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
+        body: JSON.stringify(payload),
       });
 
       const data = await res.json().catch(() => ({}));
