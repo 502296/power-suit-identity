@@ -32,17 +32,38 @@
 
   function buildImageList() {
     const images = [];
-    for (let i = 1; i <= 11; i++) {
+    for (let i = 1; i <= 99; i++) {
       images.push(`${String(i).padStart(2, "0")}.jpg`);
     }
     return images;
   }
 
-  function loadImagesDirectly() {
+  function imageExists(fileName) {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => resolve(true);
+      img.onerror = () => resolve(false);
+      img.src = `/images/atelier/${fileName}`;
+    });
+  }
+
+  async function getExistingImages() {
+    const candidates = buildImageList();
+    const existing = [];
+
+    for (const fileName of candidates) {
+      const ok = await imageExists(fileName);
+      if (ok) existing.push(fileName);
+    }
+
+    return existing;
+  }
+
+  async function loadImagesDirectly() {
     try {
       showStatus("Loading your private selection...");
 
-      const images = buildImageList();
+      const images = await getExistingImages();
 
       if (!images.length) {
         showStatus("No images available right now.");
@@ -53,17 +74,19 @@
       if (gridSlot) gridSlot.innerHTML = "";
       if (listSlot) listSlot.innerHTML = "";
 
-      const heroImage = images.shift();
+      const imagePool = [...images];
+
+      const heroImage = imagePool.shift();
       if (heroImage && heroSlot) {
         heroSlot.appendChild(createImageCard(heroImage, "hero-shot"));
       }
 
-      const gridImages = images.splice(0, 8);
+      const gridImages = imagePool.splice(0, 8);
       gridImages.forEach((fileName) => {
         if (gridSlot) gridSlot.appendChild(createImageCard(fileName, "shot"));
       });
 
-      images.forEach((fileName) => {
+      imagePool.forEach((fileName) => {
         if (listSlot) listSlot.appendChild(createImageCard(fileName, "shot"));
       });
 
