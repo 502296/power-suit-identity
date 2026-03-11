@@ -30,6 +30,38 @@
     return card;
   }
 
+  async function verifySession() {
+    const params = new URLSearchParams(window.location.search);
+    const sessionId = params.get("session_id");
+
+    if (!sessionId) {
+      showStatus("Missing payment session.");
+      return false;
+    }
+
+    try {
+      showStatus("Verifying your payment...");
+
+      const res = await fetch(`/api/verify-session?session_id=${encodeURIComponent(sessionId)}`, {
+        method: "GET",
+        headers: { Accept: "application/json" },
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok || !data || data.ok !== true) {
+        showStatus("Payment could not be verified.");
+        return false;
+      }
+
+      return true;
+    } catch (error) {
+      console.error("verifySession error:", error);
+      showStatus("Failed to verify payment.");
+      return false;
+    }
+  }
+
   async function loadImages() {
     try {
       showStatus("Loading your private selection...");
@@ -121,5 +153,11 @@
     btnAnother.addEventListener("click", startAnotherLookCheckout);
   }
 
-  loadImages();
+  async function init() {
+    const verified = await verifySession();
+    if (!verified) return;
+    await loadImages();
+  }
+
+  init();
 })();
