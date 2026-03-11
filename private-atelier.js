@@ -21,10 +21,14 @@
     card.className = className;
 
     const img = document.createElement("img");
-    img.src = `images/atelier/${fileName}`;
+    img.src = `/images/atelier/${fileName}`;
     img.alt = "Power Suit Identity private atelier look";
     img.loading = "lazy";
     img.decoding = "async";
+
+    img.onerror = function () {
+      card.remove();
+    };
 
     card.appendChild(img);
     return card;
@@ -38,32 +42,11 @@
     return images;
   }
 
-  function imageExists(fileName) {
-    return new Promise((resolve) => {
-      const img = new Image();
-      img.onload = () => resolve(true);
-      img.onerror = () => resolve(false);
-      img.src = `images/atelier/${fileName}`;
-    });
-  }
-
-  async function getExistingImages() {
-    const candidates = buildImageList();
-    const existing = [];
-
-    for (const fileName of candidates) {
-      const ok = await imageExists(fileName);
-      if (ok) existing.push(fileName);
-    }
-
-    return existing;
-  }
-
-  async function loadImagesDirectly() {
+  function loadImagesDirectly() {
     try {
       showStatus("Loading your private selection...");
 
-      const images = await getExistingImages();
+      const images = buildImageList();
 
       if (!images.length) {
         showStatus("No images available right now.");
