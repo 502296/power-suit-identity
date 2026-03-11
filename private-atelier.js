@@ -30,23 +30,24 @@
     return card;
   }
 
-  async function loadImages() {
+  function buildImageList() {
+    const images = [];
+    for (let i = 1; i <= 11; i++) {
+      images.push(`${String(i).padStart(2, "0")}.jpg`);
+    }
+    return images;
+  }
+
+  function loadImagesDirectly() {
     try {
       showStatus("Loading your private selection...");
 
-      const res = await fetch("/api/list-atelier-images", {
-        method: "GET",
-        headers: { Accept: "application/json" },
-      });
+      const images = buildImageList();
 
-      const data = await res.json().catch(() => ({}));
-
-      if (!res.ok || !data || !Array.isArray(data.images) || data.images.length === 0) {
+      if (!images.length) {
         showStatus("No images available right now.");
         return;
       }
-
-      const images = data.images.slice();
 
       if (heroSlot) heroSlot.innerHTML = "";
       if (gridSlot) gridSlot.innerHTML = "";
@@ -78,7 +79,7 @@
 
       showStatus("");
     } catch (error) {
-      console.error("loadImages error:", error);
+      console.error("loadImagesDirectly error:", error);
       showStatus("Failed to load images.");
     }
   }
@@ -121,5 +122,5 @@
     btnAnother.addEventListener("click", startAnotherLookCheckout);
   }
 
-  loadImages();
+  loadImagesDirectly();
 })();
