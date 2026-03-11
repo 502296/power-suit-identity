@@ -21,7 +21,7 @@
     card.className = className;
 
     const img = document.createElement("img");
-    img.src = `/images/atelier/${fileName}`;
+    img.src = `images/atelier/${fileName}`;
     img.alt = "Power Suit Identity private atelier look";
     img.loading = "lazy";
     img.decoding = "async";
@@ -43,7 +43,7 @@
       const img = new Image();
       img.onload = () => resolve(true);
       img.onerror = () => resolve(false);
-      img.src = `/images/atelier/${fileName}`;
+      img.src = `images/atelier/${fileName}`;
     });
   }
 
