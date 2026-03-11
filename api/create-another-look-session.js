@@ -18,6 +18,16 @@ module.exports = async (req, res) => {
 
     const stripe = new Stripe(secretKey);
 
+    let body = {};
+    try {
+      body = typeof req.body === "string" ? JSON.parse(req.body || "{}") : (req.body || {});
+    } catch {
+      body = {};
+    }
+
+    const email = String(body.email || "").trim();
+    const fullName = String(body.fullName || "").trim();
+
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       payment_method_types: ["card"],
@@ -35,6 +45,14 @@ module.exports = async (req, res) => {
           quantity: 1,
         },
       ],
+
+      ...(email ? { customer_email: email } : {}),
+
+      metadata: {
+        order_type: "additional_look",
+        ...(email ? { email } : {}),
+        ...(fullName ? { fullName } : {}),
+      },
 
       success_url:
         "https://powersuitidentity.com/private-atelier.html?session_id={CHECKOUT_SESSION_ID}",
